@@ -5,7 +5,7 @@
     <span class="profilePic">{{this.username.charAt(0).toUpperCase()}}</span>
     <h3 style = "margin-left: 2%;">@{{this.username}}</h3>
     <h4 style = "margin-left: 2%;">{{this.followers}} Followers  &nbsp; {{this.following}} Following</h4>
-      <div class="options">
+      <!-- <div class="options">
         <button class = "pretty_button options_item" @click="chooseFreets" :style= "{'background-color': chosen == 'freets' ? 'rgb(153, 153, 255)' : '#f8f8f8'}">
           Freets
         </button>
@@ -28,7 +28,7 @@
       <article
         v-else
       >
-        <h3>No freets found.</h3>
+        <h3>No events found.</h3>
       </article>
     </section>
 
@@ -40,52 +40,9 @@
           :freet="freet"
         />
       </div>
-    </section>
+    </section> -->
 
-    <section>
-      <kalendar :configuration="calendar_settings" :events="events">
-        <!-- CREATED CARD SLOT -->
-        <div slot="created-card" slot-scope="{ event_information }" class="details-card">
-          <h4 class="appointment-title">{{event_information.data.title}}</h4>
-          <small>
-            {{event_information.data.description}}
-          </small>
-          <span class="time">{{event_information.start_time | formatToHours}} - {{event_information.end_time |
-            formatToHours}}</span>
-          <button @click="removeEvent(event_information)" class="remove">
-            X
-          </button>
-        </div>
-        <!-- CREATING CARD SLOT -->
-        <div slot="creating-card" slot-scope="{ event_information }">
-          <h4 class="appointment-title" style="text-align: left;">
-            New Appointment
-          </h4>
-          <span class="time">
-            {{event_information.start_time | formatToHours}}
-            -
-            {{event_information.end_time | formatToHours}}
-          </span>
-        </div>
-        <!-- POPUP CARD SLOT -->
-        <div slot="popup-form" slot-scope="{ popup_information }" style="display: flex; flex-direction: column;">
-          <h4 style="margin-bottom: 10px">
-            New Appointment
-          </h4>
-          <input v-model="new_appointment['title']" type="text" name="title" placeholder="Title">
-          <textarea v-model="new_appointment['description']" type="text" name="description" placeholder="Description" rows="2"></textarea>
-          <div class="buttons">
-            <button class="cancel" @click="closePopups()">
-              Cancel
-            </button>
-            <button @click="addEvent(popup_information)">
-              Save
-            </button>
-          </div>
-        </div>
-      </kalendar>
-
-    </section>
+    <Calendar></Calendar>
 
   </main>
 </template>
@@ -94,12 +51,13 @@
 import FreetComponent from '@/components/Freet/FreetComponent.vue';
 import CreateFreetForm from '@/components/Freet/CreateFreetForm.vue';
 import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
+import Calendar from '@/components/Profile/Calendar.vue';
 
 import { Kalendar } from 'kalendar-vue';
 
 export default {
   name: 'ProfilePage',
-  components: {FreetComponent, GetFreetsForm, CreateFreetForm, Kalendar},
+  components: {FreetComponent, GetFreetsForm, CreateFreetForm, Kalendar, Calendar},
   data() {
     return {
       chosen: "freets",
@@ -160,33 +118,6 @@ export default {
       }
       this.chosen = "likes";
       this.view = false;
-    },
-    // Create Event
-    addEvent(popup_data, form_data) {
-      let payload = {
-        data: {
-          title: this.new_appointment.title,
-          description: this.new_appointment.description,
-        },
-        from: popup_info.start_time,
-        to: popup_info.end_time,
-      };
-
-      this.$kalendar.addNewEvent(
-        payload,
-      );
-      this.$kalendar.closePopups();
-      this.clearFormData();
-    },
-
-    // Remove Event
-    removeEvent(kalendarEvent) {
-      let day = kalendarEvent.start_time.slice(0, 10);
-      this.$kalendar.removeEvent({
-        day,
-        key: kalendarEvent.key,
-        id: kalendarEvent.kalendar_id,
-      })
     },
   }
 };

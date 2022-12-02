@@ -8,10 +8,10 @@
 </template>
 
 <script>
-
+import Calendar from '@/components/Profile/Calendar.vue';
 export default {
   name: 'MessagesPage',
-  components: {
+  components: { Calendar
   }
 };
 </script>

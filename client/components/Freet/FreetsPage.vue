@@ -54,7 +54,7 @@
       <article
         v-else
       >
-        <h3>No freets found.</h3>
+        <h3>No events found.</h3>
       </article>
     </section>
   </main>
