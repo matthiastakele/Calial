@@ -1,17 +1,18 @@
 <template>
   <main>
+    <p>{{this.a}}</p>
+    <p>{{this.b}}</p>
+    <button @click="customEventCreation">
+      button
+    </button>
     <vue-cal
       ref="vuecal"
+      style="height: 600px"
       :disable-views="['years']"
-      :cell-click-hold="false"
-      :drag-to-create-event="false"
       editable-events
-      @cell-dblclick="
-        $refs.vuecal.createEvent($event, 60, {
-          title: 'New Event',
-          class: 'leisure',
-        })
-      "
+      :on-event-dblclick="deleteEvent"
+      :dblclickToNavigate = "false"
+      :events="events"
     >
     </vue-cal>
   </main>
@@ -22,6 +23,8 @@ import VueCal from "vue-cal";
 export default {
   components: { VueCal },
   data: () => ({
+    a: "",
+    b: "",
     selectedEvent: null,
     showEventCreationDialog: false,
     eventsCssClasses: ["leisure", "sport", "health"],
@@ -57,31 +60,24 @@ export default {
     ],
   }),
   methods: {
-    onEventClick(event, e) {
+    /* onEventClick(event, e) {
       this.selectedEvent = event;
       this.showDialog = true;
 
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
+      this.events = [];
+    } */
+    createEvent(){
+      $refs.vuecal.createEvent($event, 60, {
+          title: 'New Event',
+          class: 'leisure',
+        })
     },
-    customEventCreation() {
-      const dateTime = prompt(
-        "Create event on (YYYY-MM-DD HH:mm)",
-        "2022-12-01 13:15"
-      );
-
-      // Check if date format is correct before creating event.
-      if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
-        this.$refs.vuecal.createEvent(
-          // Formatted start date and time or JavaScript Date object.
-          dateTime,
-          // Event duration in minutes (Integer).
-          120,
-          // Custom event props (optional).
-          { title: "New Event", content: "yay! 🎉", class: "blue-event" }
-        );
-      } else if (dateTime) alert("Wrong date format.");
-    },
+    deleteEvent(event, e){
+      this.a = event;
+      this.b = e;
+    }
   },
 };
 </script>

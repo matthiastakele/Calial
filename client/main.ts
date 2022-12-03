@@ -13,7 +13,6 @@ import { faUser as regUser} from '@fortawesome/free-regular-svg-icons'
 import { faGear as gear} from '@fortawesome/free-solid-svg-icons'
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
-Vue.use(VueCal);
 
 library.add(regHeart, solidHeart, regCompass, regMessage, regUser, gear)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
