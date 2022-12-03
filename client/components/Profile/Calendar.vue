@@ -86,13 +86,16 @@ export default {
 .vuecal__menu,
 .vuecal__cell-events-count {
   background-color: rgb(153, 153, 255);
+  font-family: Arial;
 }
 .vuecal__title-bar {
   background-color: #e4f5ef;
+  font-family: Arial;
 }
 .vuecal__cell--today,
 .vuecal__cell--current {
   background-color: rgba(240, 240, 255, 0.4);
+  font-family: Arial;
 }
 .vuecal:not(.vuecal--day-view) .vuecal__cell--selected {
   background-color: rgba(235, 255, 245, 0.4);
@@ -118,6 +121,7 @@ export default {
 .vuecal__event-title {
   font-size: 15px;
   font-weight: bold;
+  font-family: Arial;
 }
 
 .vuecal__event-time {
@@ -128,6 +132,7 @@ export default {
 
 .vuecal__event-content {
   font-style: italic;
+  font-family: Arial;
 }
 .vuecal__event.leisure {
   background-color: rgba(253, 156, 66, 0.9);

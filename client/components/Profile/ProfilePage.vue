@@ -41,7 +41,7 @@
         />
       </div>
     </section> -->
-
+    <h2 style="text-align: center;">{{this.username}}, here is your personal Calial calendar:</h2>
     <Calendar></Calendar>
 
   </main>
@@ -53,11 +53,11 @@ import CreateFreetForm from '@/components/Freet/CreateFreetForm.vue';
 import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
 import Calendar from '@/components/Profile/Calendar.vue';
 
-import { Kalendar } from 'kalendar-vue';
+// import { Kalendar } from 'kalendar-vue';
 
 export default {
   name: 'ProfilePage',
-  components: {FreetComponent, GetFreetsForm, CreateFreetForm, Kalendar, Calendar},
+  components: {FreetComponent, GetFreetsForm, CreateFreetForm, Calendar},
   data() {
     return {
       chosen: "freets",
@@ -69,23 +69,23 @@ export default {
       view: false,
 
       events: [],
-    calendar_settings: {
-      style: 'material_design',
-      cell_height: 20,
-      scrollToNow: true,
-      current_day: new Date(),
-      read_only: false,
-      day_starts_at: 0,
-      day_ends_at: 24,
-      overlap: true,
-      // hide_dates: ['2019-10-31'], // Spooky
-      // hide_days: [6],
-      past_event_creation: true
-    },
-    new_appointment: {
-      title: null,
-      description: null
-    }
+    // calendar_settings: {
+    //   style: 'material_design',
+    //   cell_height: 20,
+    //   scrollToNow: true,
+    //   current_day: new Date(),
+    //   read_only: false,
+    //   day_starts_at: 0,
+    //   day_ends_at: 24,
+    //   overlap: true,
+    //   // hide_dates: ['2019-10-31'], // Spooky
+    //   // hide_days: [6],
+    //   past_event_creation: true
+    // },
+    // new_appointment: {
+    //   title: null,
+    //   description: null
+    // }
 
     };
   },
