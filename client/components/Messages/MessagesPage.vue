@@ -42,26 +42,26 @@
 
     </div>
     <div class="two">Events</div>
-    <div class="three">Live Chat
-      <section>
-        <h2>Your name</h2>
-        <input 
-            type="text"
-            name="username"
-            v-model="username"
-        />
-        <button
-            @click="changeName"
-        >
-            Change name
-        </button>
+    <div class="three"> 
+      <h3>Live Chat</h3>
+      <h5>Your Displayed Name: {{username}}</h5>
+      <section v-if="joinedRoom.length === 0">
+          <!-- <div v-for="room in $store.state.groups" :key="room" @click="joinRoom(room)">
+              {{ room }}
+          </div> -->
+          <button
+            :key = $store.state.currentGroup
+            @click="joinRoom($store.state.currentGroup)">
+            Join the Live Chat for: {{$store.state.currentGroup}}
+          </button>
       </section>
 
-      <section v-if="joinedRoom.length === 0">
+      <!-- <section v-if="joinedRoom.length === 0">
           <div v-for="room in rooms" :key="room" @click="joinRoom(room)">
               {{ room }}
           </div>
-      </section>
+      </section> -->
+
       <section v-else>
           <h2>{{ joinedRoom }}</h2>
           <input
@@ -118,7 +118,7 @@ export default {
   data() {
     return {
       editing: false, 
-      username: "Anonymous",
+      username: this.$store.state.username,
       text: "",
       messages: [],
       rooms: ["Room1", "Room2"],
