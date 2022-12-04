@@ -195,6 +195,7 @@ export default {
       let res = await r.json();
       this.authorId = res.userId;
       this.$store.commit('refreshLikes', this.authorId);
+      this.$store.commit('updateProfileUsername', this.authorId);
     }
   }
 };

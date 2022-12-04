@@ -84,6 +84,11 @@ class CircleCollection {
     return CircleModel.find({userId: author._id}).populate('userId');
   }
 
+  static async findGroups(username: string): Promise<Array<HydratedDocument<Circle>>> {
+    // const author = await UserCollection.findOneByUsername(username);
+    return CircleModel.find({users: username}).populate('users');
+  }
+
     /**
    * Get all the circles by given author
    *

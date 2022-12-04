@@ -11,6 +11,7 @@ export default {
       url: '/api/circles/self',
       method: 'PUT',
       hasBody: true,
+      refreshGroups: true,
       fields: [
         {id: 'circleName', label: 'GroupName', value: ''}
       ],

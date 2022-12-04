@@ -61,6 +61,7 @@ export default {
       this.$store.commit('refreshProfileFreets', this.$store.state.username);
       this.$store.commit('refreshLikes', this.$store.state.userId);
       this.$store.commit('updateProfileUsername', this.$store.state.username);
+      this.$store.commit('refreshGroups');
     }
   }
 }

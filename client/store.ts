@@ -16,7 +16,8 @@ const store = new Vuex.Store({
     username: null, // Username of the logged in user
     userId: null,
     profileUsername: null, // current clicked on profile username (particularly helpful when clicking other users)
-    alerts: {} // global success/error messages encountered during submissions to non-visible forms
+    alerts: {}, // global success/error messages encountered during submissions to non-visible forms
+    groups: []
   },
   mutations: {
     alert(state, payload) {
@@ -99,6 +100,18 @@ const store = new Vuex.Store({
       state.likes = state.freets.filter(function (freet) {
         return freetIds.includes(freet._id);
       });
+    },
+    async refreshGroups(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = `/api/circles`;
+      const res = await fetch(url).then(async r => r.json());
+      Vue.set(state, 'groups', []);
+      for (let i = 0; i < res.length; i++) {
+        // state.groups.push(res[i])
+        state.groups.push(res[i].name);
+      }
     }
   },
   // Store data across page refreshes, only discard on browser close

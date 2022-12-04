@@ -131,6 +131,20 @@ router.delete(
   }
 );
 
+router.delete(
+  '/:circleId?/self',
+  [],
+  async (req: Request, res: Response) => {
+    const userId = (req.session.userId as string) ?? '';
+    const user = await UserCollection.findOneByUserId(userId);
+    const circle = await CircleCollection.findByName(req.params.circleId);
+    await CircleCollection.deleteUser(circle._id, user.username);
+    res.status(200).json({
+      message: `You deleted ${userId} from ${circle.name} successfully.`
+    });
+  }
+);
+
 /**
  * Get all users for a circle
  *
@@ -152,6 +166,14 @@ router.delete(
     res.status(200).json({
       users
     });
+  }
+);
+
+router.get(
+  '/testing',
+  [],
+  async (req: Request, res: Response) => {
+    console.log('testing');
   }
 );
 
@@ -243,7 +265,7 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const circles = await CircleCollection.findAllByUserId(userId);
+    const circles = await CircleCollection.findGroups(userId);
     res.status(200).json(circles);
   }
 );
