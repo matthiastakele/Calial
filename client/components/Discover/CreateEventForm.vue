@@ -12,12 +12,12 @@ export default {
       method: 'POST',
       hasBody: true,
       fields: [
-        {id: 'title', label: 'Name Of Event', value: ''},
-        {id: 'start', label: 'Start Date', value: ''},
-        {id: 'end', label: 'End Date', value: ''},
-        {id: 'content', label: 'Content', value: ''}
+        {id: 'title', label: 'Event name', value: ''},
+        {id: 'start', label: 'Start time', value: ''},
+        {id: 'end', label: 'End time', value: ''},
+        {id: 'content', label: 'Location', value: ''}
       ],
-      title: 'Create an event',
+      title: 'Create event',
       callback: () => {
         const message = 'Successfully created an event!';
         this.$set(this.alerts, message, 'success');

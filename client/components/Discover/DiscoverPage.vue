@@ -3,6 +3,7 @@
 
 <template>
   <main>
+    <br>
     <CreateEventForm/>
     <ViewEventsForm/>
     <div>
