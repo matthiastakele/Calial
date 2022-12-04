@@ -64,16 +64,19 @@ class EventCollection {
   }
 
   /**
-   * Update a event with the new content
+   * Update a event with the new content. Every time *any* part of the event is changed, we can just call this.
    *
    * @param {string} eventId - The id of the event to be updated
-   * @param {string} content - The new content of the event
+   * @param {string} start - The new start of the event
+   * @param {string} end - The new title of the event
+   * @param {string} title - The new title of the event
    * @return {Promise<HydratedDocument<Event>>} - The newly updated event
    */
-  static async updateOne(eventId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Event>> {
+  static async updateOne(eventId: Types.ObjectId | string, start: string, end: string, title: string): Promise<HydratedDocument<Event>> {
     const event = await EventModel.findOne({_id: eventId});
-    event.content = content;
-    event.dateModified = new Date();
+    event.start = start;
+    event.end = end;
+    event.title = title;
     await event.save();
     return event.populate('authorId');
   }

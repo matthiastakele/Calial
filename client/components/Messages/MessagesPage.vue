@@ -3,6 +3,11 @@
 
 <template>
   <main>
+    <p>Messages Page</p>
+    <Calendar
+    ref="calendar"
+    />
+</main>
     <section>
       <div class="groupOptions">
         <div><CreateGroupForm /></div>
@@ -13,7 +18,6 @@
     <div class="one">Tab for groups</div>
     <div class="two">Events</div>
     <div class="three">Live Chat</div>
-  </main>
 </template>
 
 <script>
@@ -23,6 +27,12 @@ import JoinGroupForm from '@/components/Messages/JoinGroupForm.vue';
 import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
 export default {
   name: 'MessagesPage',
+  components: { Calendar
+  },
+  beforeMount() {
+    // users needs to be input here as an array
+    // this.$refs.calendar.addEventsForUser(users);
+  },
   components: { 
     Calendar,
     ChangeUsernameForm, 
