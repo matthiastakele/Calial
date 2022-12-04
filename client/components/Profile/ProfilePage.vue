@@ -42,6 +42,7 @@
       </div>
     </section> -->
     <h2 style="text-align: center;">{{this.username}}, here is your personal Calial calendar:</h2>
+    <!-- this currently makes it so we can't switch to other tabs lol -->
     <Calendar ref="personalCalendar" />
   </main>
 </template>
