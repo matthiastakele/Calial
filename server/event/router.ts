@@ -1,5 +1,6 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
+import EventModel from './model';
 import EventCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as eventValidator from '../event/middleware';
@@ -70,12 +71,21 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const event = await EventCollection.addOne(userId, req.body.title, req.body.start, req.body.end, req.body.content);
+    const events = await EventCollection.findAllByUserId(userId as string);
+    let taken = false;
+    for(const e of events){
+      if(e.start == req.body.start && e.end == req.body.end){
+        taken = true;
+      }
+    }
+    if(!taken){
+      const event = await EventCollection.addOne(userId, req.body.title, req.body.start, req.body.end, req.body.content);
 
-    res.status(201).json({
-      message: 'Your event was created successfully.',
-      event: util.constructEventResponse(event)
-    });
+      res.status(201).json({
+        message: 'Your event was created successfully.',
+        event: util.constructEventResponse(event)
+      });
+    }
   }
 );
 
@@ -90,14 +100,17 @@ router.post(
  * @throws {404} - If the eventId is not valid
  */
 router.delete(
-  '/:eventId?',
+  '/',
   [
     userValidator.isUserLoggedIn,
-    eventValidator.isEventExists
+    //eventValidator.isEventExists
     //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
-    await EventCollection.deleteOne(req.params.eventId);
+    const userId = (req.session.userId as string) ?? ''; 
+    const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
+    const id = await event._id;
+    await EventCollection.deleteOne(id);
     res.status(200).json({
       message: 'Your event was deleted successfully.'
     });

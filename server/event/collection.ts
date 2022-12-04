@@ -2,6 +2,7 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {Event} from './model';
 import EventModel from './model';
 import UserCollection from '../user/collection';
+import { NIL } from 'uuid';
 
 /**
  * This files contains a class that has the functionality to explore events
@@ -29,6 +30,7 @@ class EventCollection {
     });
     await event.save(); // Saves event to MongoDB
     return event.populate('authorId');
+
   }
 
   /**
@@ -41,6 +43,16 @@ class EventCollection {
     return EventModel.findOne({_id: eventId}).populate('authorId');
   }
 
+  /**
+   * Find a event by start and end time
+   *
+   * @param {string} startdate - The start date
+   * @param {string} enddate - The start date
+   * @return {Promise<HydratedDocument<Event>> | Promise<null> } - The event with the given startdate and enddate, if any
+   */
+   static async findIfTaken(startdate: string, enddate: string): Promise<Boolean> {
+    return EventModel.findOne({start: startdate, end: enddate}).populate('authorId') != null;
+  }
   /**
    * Get all the events in the database
    *
@@ -62,6 +74,16 @@ class EventCollection {
     const author = await UserCollection.findOneByUsername(username);
     return EventModel.find({authorId: author._id}).populate('authorId');
   }
+
+   /**
+   * Get all the events in by given author
+   *
+   * @param {string} userId - The userId of author of the events
+   * @return {Promise<HydratedDocument<Event>[]>} - An array of all of the events
+   */
+    static async findAllByUserId(userId: string): Promise<Array<HydratedDocument<Event>>> {
+      return EventModel.find({authorId: userId}).populate('authorId');
+    }
 
   /**
    * Update a event with the new content. Every time *any* part of the event is changed, we can just call this.
