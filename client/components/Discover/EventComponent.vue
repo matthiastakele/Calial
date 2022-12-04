@@ -11,12 +11,9 @@
         </div>
         -->
         <div class = "right"> 
-          <b>
-            Posted by {{ event.author }}
+          <b id="author">
+            @{{ event.author }}
           </b>
-        </div>
-        <div>
-          Title:
         </div>
         <textarea
           v-if="editing"
@@ -30,8 +27,8 @@
         >
           {{ event.title }}
         </p>
-        <div>
-            Starting on:
+        <div class = "desc">
+            From:
         </div>
         <textarea
           v-if="editing"
@@ -43,10 +40,10 @@
           v-else
           class="start"
         >
-          {{ event.start }}
+          📅 {{ event.start }}
         </p>
-        <div>
-            Ending on:
+        <div class = 'desc'>
+            To:
         </div>
         <textarea
           v-if="editing"
@@ -58,9 +55,9 @@
           v-else
           class="end"
         >
-          {{ event.end }}
+          📅 {{ event.end }}
         </p>
-        <div>
+        <div class = 'desc'>
             Description:
         </div>
 
@@ -80,7 +77,7 @@
           v-else
           class="content"
         >
-          {{ event.content }}
+          📍 {{ event.content }}
         </p>
         <button class = "pretty_button"
           v-if="editing"
@@ -262,7 +259,7 @@ export default {
 .event {
     border-radius: 25px;
     margin: 10px;
-    border: 1px solid #111;
+    border: 2px solid #111;
     padding: 20px;
     position: relative;
 }
@@ -283,6 +280,24 @@ export default {
 
 .h4 .h5 .h6 {
   font-size: 40px;
+}
+
+.desc {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: bold;
+}
+.right {
+  padding-bottom: 20px;
+  border-bottom-width:2px;
+  border-bottom-color:rgb(0, 0, 0);
+  border-bottom-style: solid;
+}
+
+#author {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding-bottom: 20px;
 }
 
 span.profilePic{

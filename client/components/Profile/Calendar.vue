@@ -178,12 +178,6 @@ export default {
   font-family: Arial;
 }
 
-.vuecal__event-time {
-  display: inline-block;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-}
-
 .vuecal__heading .weekday-label {
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   display: flex;
@@ -213,8 +207,8 @@ export default {
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 85%;  
   display: inline-block;
-  margin-bottom: 12px;
-  padding-bottom: 6px;
+  margin-bottom: 3px;
+  padding-bottom: 3px;
 }
 
 .vuecal__event-title {
@@ -226,6 +220,7 @@ export default {
 
 .vuecal__event-content {
   font-style: italic;
+  font-size: 15px;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .vuecal__event.leisure {

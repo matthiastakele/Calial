@@ -6,10 +6,7 @@
     <br>
     <CreateEventForm/>
     <ViewEventsForm ref = "vieweventsform"/>
-    <br>
-    <hr></hr>
-    <br>
-    <p style="font-size:30px" ><center><b>Upcoming Events</b> </center></p>
+    <p style="font-size:30px" ><center><b>Discover Events</b> </center></p>
     <div
         v-if="$store.state.events.length"
     >
