@@ -4,10 +4,10 @@
 <template>
   <main>
     <p>Messages Page</p>
-  </main>
-  <Calendar
+    <Calendar
     ref="calendar"
     />
+</main>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
   components: { Calendar
   },
   beforeMount() {
-    // users needs to be input here
+    // users needs to be input here as an array
     // this.$refs.calendar.addEventsForUser(users);
   },
 };
