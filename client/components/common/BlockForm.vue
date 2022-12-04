@@ -170,7 +170,7 @@ export default {
 @import "/components/global_css.css";
 form {
   border-radius: 25px;
-  border: 1px solid #111; 
+  border: 2px solid #111; 
   padding: 1rem;
   display: flex;
   flex-direction: column;
