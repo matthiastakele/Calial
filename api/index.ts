@@ -15,6 +15,7 @@ import {followRouter} from '../server/follow/router';
 import {circleRouter} from '../server/circle/router';
 import {eventRouter} from '../server/event/router';
 import MongoStore from 'connect-mongo';
+import { Server } from "socket.io";
 
 // Load environmental variables
 dotenv.config({});
@@ -92,4 +93,51 @@ app.all('*', (req: Request, res: Response) => {
 const server = http.createServer(app);
 server.listen(app.get('port'), () => {
   console.log(`Express server running at http://localhost:${app.get('port') as number}`);
+});
+
+const io = new Server(server, { // create websocket endpoint so that server & client can talk to each other
+  cors: {
+      origin: "*",
+      methods: ['GET', "POST"]
+  }
+}); 
+
+const users : { [key: string]: string} = {}; // temporary array to save socketId-username pairs. In practice, use mongodb.
+
+io.on("connection", (socket) => {
+  console.log(`user ${socket.id} is connected.`);
+  socket.broadcast.emit('join', {
+    id: new Date().getTime(),
+    text: "A new user joined.",
+    username: "Server",
+    userId: "",
+  });
+  users[socket.id] = "Anonymous";
+
+  socket.on("join-room", data => {
+    socket.join(data.roomName);
+  });
+
+  socket.on("leave-room", data => {
+    socket.leave(data.roomName);
+  });
+
+  socket.on('message', data => {
+    socket.to(data.roomName).emit('message:received', data);
+  });
+
+  socket.on('username', data => {
+    users[data.userId] = data.newUsername;
+    socket.broadcast.emit('username:received', data);
+  });
+
+  socket.on('disconnect', () => {
+      console.log(`user ${socket.id} left.`);
+      socket.broadcast.emit('leave', {
+        id: new Date().getTime(),
+        text: `User ${users[socket.id]} left.`,
+        username: "Server",
+        userId: "",
+      });
+  });
 });

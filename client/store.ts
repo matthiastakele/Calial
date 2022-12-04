@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     events: [],
     profileUsername: null, // current clicked on profile username (particularly helpful when clicking other users)
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
-    groups: []
+    groups: [],
+    currentGroup: ""
   },
   mutations: {
     alert(state, payload) {
@@ -124,6 +125,9 @@ const store = new Vuex.Store({
         // state.groups.push(res[i])
         state.groups.push(res[i].name);
       }
+    }, 
+    selectGroup(state, group){
+      Vue.set(state, 'currentGroup', group);
     }
   },
   // Store data across page refreshes, only discard on browser close

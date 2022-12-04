@@ -2,8 +2,17 @@
     <div
       class="group"
     >
-    <button class="groupButton">
-        {{username}}
+    <button 
+        v-if="groupName === $store.state.currentGroup"
+        class="selectedGroupButton"
+        @click="selectGroup(groupName)">
+        {{groupName}}
+    </button>
+    <button 
+        v-else
+        class="groupButton"
+        @click="selectGroup(groupName)">
+        {{groupName}}
     </button>
     <button class="exitButton"
         @click="exitGroup">
@@ -17,7 +26,7 @@
 <script>
 export default {
     name: 'GroupComponent',
-    props: ['username'],
+    props: ['groupName'],
     data() {
       return {
         editing: false, // Whether or not this freet is in edit mode
@@ -42,7 +51,10 @@ export default {
             let r = await fetch(`/api/circles/${this.$props.username}/self`, options);
             let res = await r.json();    
             this.$store.commit('refreshGroups');
-        }
+        },
+        selectGroup(group){
+            this.$store.commit('selectGroup', group)
+        },
 
     },
   };
@@ -62,6 +74,17 @@ export default {
     width: 90%;
     height: 100%;
     font-size:x-large;
+    padding: 3px;
+    /* background-color: white; */
+}
+.selectedGroupButton{
+    width: 90%;
+    height: 100%;
+    font-size:x-large;
+    background-color: darkgray;
+    border: 1px solid black; 
+    border-radius: 5px;
+    padding: 3px;
 }
 .exitButton{
     color: red;
