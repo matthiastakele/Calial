@@ -19,13 +19,13 @@ class EventCollection {
    * @param {string} content - The id of the content of the event
    * @return {Promise<HydratedDocument<Event>>} - The newly created event
    */
-  static async addOne(authorId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Event>> {
-    const date = new Date();
+  static async addOne(authorId: Types.ObjectId | string, title: string, startdate: string, enddate: string, content: string): Promise<HydratedDocument<Event>> {
     const event = new EventModel({
-      authorId,
-      dateCreated: date,
-      content,
-      dateModified: date
+      authorId: authorId,
+      title: title,
+      start: startdate,
+      end: enddate,
+      content: content
     });
     await event.save(); // Saves event to MongoDB
     return event.populate('authorId');
