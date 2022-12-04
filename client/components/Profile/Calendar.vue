@@ -13,7 +13,6 @@
       :on-event-dblclick="deleteEvent"
       :dblclickToNavigate = "false"
       :events="events"
-      @event-create="logEvents('event-create', $event)"
     >
     </vue-cal>
   </main>
