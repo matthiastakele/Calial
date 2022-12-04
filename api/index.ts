@@ -79,7 +79,7 @@ app.use('/api/likes', likeRouter);
 app.use('/api/comments', commentRouter);
 app.use('/api/follows', followRouter);
 app.use('/api/circles', circleRouter);
-app.use('/api/event', eventRouter);
+app.use('/api/events', eventRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {
