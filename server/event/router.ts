@@ -100,51 +100,51 @@ router.post(
  * @throws {404} - If the eventId is not valid
  */
 router.delete(
-  '/',
+  '/:eventId?',
   [
-    userValidator.isUserLoggedIn,
+    userValidator.isUserLoggedIn
     //eventValidator.isEventExists
     //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
-    const userId = (req.session.userId as string) ?? ''; 
-    const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
-    const id = await event._id;
-    await EventCollection.deleteOne(id);
+    // const userId = (req.session.userId as string) ?? ''; 
+    // const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
+    // const id = event._id;
+    await EventCollection.deleteOne(req.params.eventId);
     res.status(200).json({
       message: 'Your event was deleted successfully.'
     });
   }
 );
 
-// /**
-//  * Modify a event
-//  *
-//  * @name PATCH /api/events/:id
-//  *
-//  * @param {string} content - the new content for the event
-//  * @return {EventResponse} - the updated event
-//  * @throws {403} - if the user is not logged in or not the author of
-//  *                 of the event
-//  * @throws {404} - If the eventId is not valid
-//  * @throws {400} - If the event content is empty or a stream of empty spaces
-//  * @throws {413} - If the event content is more than 140 characters long
-//  */
-// router.patch(
-//   '/:eventId?',
-//   [
-//     userValidator.isUserLoggedIn,
-//     eventValidator.isEventExists,
-//     eventValidator.isValidEventModifier,
-//     eventValidator.isValidEventContent
-//   ],
-//   async (req: Request, res: Response) => {
-//     const event = await EventCollection.updateOne(req.params.eventId, req.body.start, req.body.end, req.body.title);
-//     res.status(200).json({
-//       message: 'Your event was updated successfully.',
-//       event: util.constructEventResponse(event)
-//     });
-//   }
-// );
+/**
+ * Modify a event
+ *
+ * @name PATCH /api/events/:id
+ *
+ * @param {string} content - the new content for the event
+ * @return {EventResponse} - the updated event
+ * @throws {403} - if the user is not logged in or not the author of
+ *                 of the event
+ * @throws {404} - If the eventId is not valid
+ * @throws {400} - If the event content is empty or a stream of empty spaces
+ * @throws {413} - If the event content is more than 140 characters long
+ */
+router.patch(
+  '/:eventId?',
+  [
+    userValidator.isUserLoggedIn,
+    eventValidator.isEventExists
+    // eventValidator.isValidEventModifier,
+    // eventValidator.isValidEventContent
+  ],
+  async (req: Request, res: Response) => {
+    const event = await EventCollection.updateOne(req.params.eventId, req.body.title, req.body.start, req.body.end, req.body.content);
+    res.status(200).json({
+      message: 'Your event was updated successfully.',
+      event: util.constructEventResponse(event)
+    });
+  }
+);
 
 export {router as eventRouter};

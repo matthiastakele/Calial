@@ -85,7 +85,7 @@ class EventCollection {
       return EventModel.find({authorId: userId}).populate('authorId');
     }
 
-  /**
+    /**
    * Update a event with the new content. Every time *any* part of the event is changed, we can just call this.
    *
    * @param {string} eventId - The id of the event to be updated
@@ -94,14 +94,16 @@ class EventCollection {
    * @param {string} title - The new title of the event
    * @return {Promise<HydratedDocument<Event>>} - The newly updated event
    */
-  static async updateOne(eventId: Types.ObjectId | string, start: string, end: string, title: string): Promise<HydratedDocument<Event>> {
-    const event = await EventModel.findOne({_id: eventId});
-    event.start = start;
-    event.end = end;
-    event.title = title;
-    await event.save();
-    return event.populate('authorId');
-  }
+     static async updateOne(eventId: Types.ObjectId | string, title: string, start: string, end: string, content: string): Promise<HydratedDocument<Event>> {
+      const event = await EventModel.findOne({_id: eventId});
+      event.content = content;
+      event.start = start;
+      event.end = end;
+      event.title = title;
+      //event.dateModified = new Date();
+      await event.save();
+      return event.populate('authorId');
+    }
 
   /**
    * Delete a event with given eventId.

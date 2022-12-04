@@ -4,9 +4,13 @@
 <template>
   <main>
     <br>
+    <br>
     <CreateEventForm/>
     <ViewEventsForm ref = "vieweventsform"/>
-    <p style="font-size:30px" ><center><b>Discover Events</b> </center></p>
+    <br>
+    <hr></hr>
+    <br>
+    <p style="font-size:30px" ><center><b>Upcoming Events</b> </center></p>
     <div
         v-if="$store.state.events.length"
     >
