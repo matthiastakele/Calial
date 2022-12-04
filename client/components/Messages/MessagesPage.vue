@@ -7,7 +7,6 @@
     <Calendar
     ref="calendar"
     />
-</main>
     <section>
       <div class="groupOptions">
         <div><CreateGroupForm /></div>
@@ -18,6 +17,7 @@
     <div class="one">Tab for groups</div>
     <div class="two">Events</div>
     <div class="three">Live Chat</div>
+  </main>
 </template>
 
 <script>
