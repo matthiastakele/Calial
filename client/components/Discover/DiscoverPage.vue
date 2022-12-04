@@ -3,14 +3,27 @@
 
 <template>
   <main>
+    <br>
+    <br>
     <CreateEventForm/>
-    <ViewEventsForm/>
-    <div>
-      <EventComponent
-        v-for="event in $store.state.events"
-          :key="event.id"
-          :event="event"
-      />
+    <ViewEventsForm ref = "vieweventsform"/>
+    <br>
+    <hr></hr>
+    <br>
+    <p style="font-size:30px" ><center><b>Upcoming Events</b> </center></p>
+    <div
+        v-if="$store.state.events.length"
+    >
+      <div>
+        <EventComponent
+          v-for="event in $store.state.events"
+            :key="event.id"
+            :event="event"
+        />
+      </div>
+    </div>
+    <div v-else>
+      No Upcoming Events
     </div>
   </main>
 
@@ -20,12 +33,12 @@
 import EventComponent from '@/components/Discover/EventComponent.vue';
 import CreateEventForm from '@/components/Discover/CreateEventForm.vue';
 import ViewEventsForm from '@/components/Discover/ViewEventsForm.vue';
-// import CreateFreetForm from '@/components/Freet/CreateFreetForm.vue';
-// import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
-// import FreetComponent from '@/components/Freet/GetFreetsForm.vue';
 export default {
   name: 'DiscoverPage',
   components: { EventComponent, CreateEventForm, ViewEventsForm
+  },
+  mounted() {
+    this.$refs.vieweventsform.submit();
   }
 };
 </script>

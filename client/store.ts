@@ -94,6 +94,18 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       state.events = res;
     },
+    async refreshGroups(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = `/api/circles`;
+      const res = await fetch(url).then(async r => r.json());
+      Vue.set(state, 'groups', []);
+      for (let i = 0; i < res.length; i++) {
+        // state.groups.push(res[i])
+        state.groups.push(res[i].name);
+      }
+    },
     async refreshProfileFreets(state) {
       /**
        * Request the server for the currently available freets.

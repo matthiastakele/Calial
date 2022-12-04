@@ -11,6 +11,7 @@ export default {
       url: '/api/events',
       method: 'POST',
       hasBody: true,
+      refreshEvents: true,
       fields: [
         {id: 'title', label: 'Name Of Event', value: ''},
         {id: 'start', label: 'Start Date', value: ''},
