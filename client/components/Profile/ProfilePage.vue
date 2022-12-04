@@ -58,7 +58,6 @@ export default {
   name: 'ProfilePage',
   components: {FreetComponent, GetFreetsForm, CreateFreetForm, Calendar},
   mounted() {
-    console.log('asdfasdf');
     this.$refs.personalCalendar.addEventsForUser([this.$store.state.profileUsername]);
   },
   data() {

@@ -40,7 +40,7 @@ body {
   padding: 0;
   margin: 0;
   font-size: 1.2em;
-  background-color: #FAF9F6;
+  background-color: #ffffff;
 }
 
 main {
