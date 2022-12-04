@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     likes: [],
     username: null, // Username of the logged in user
     userId: null,
+    events: [],
     profileUsername: null, // current clicked on profile username (particularly helpful when clicking other users)
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
   },
@@ -56,6 +57,9 @@ const store = new Vuex.Store({
        */
       state.freets = freets;
     },
+    updateEvents(state, events) {
+      state.events = events;
+    },
     updateProfileFreets(state, profileFreets){
       state.profileFreets = profileFreets;      
     },
@@ -78,6 +82,14 @@ const store = new Vuex.Store({
        * Request the server for the currently available freets.
        */
       const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
+      const res = await fetch(url).then(async r => r.json());
+      state.freets = res;
+    },
+    async refreshEvents(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = state.filter ? `/api/users/${state.filter}/events` : '/api/events'; //SUSPECT
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
     },

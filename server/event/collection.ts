@@ -19,13 +19,16 @@ class EventCollection {
    * @param {string} content - The id of the content of the event
    * @return {Promise<HydratedDocument<Event>>} - The newly created event
    */
-  static async addOne(authorId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Event>> {
+  static async addOne(authorId: Types.ObjectId | string, title: string, startdate: string, enddate: string, content: string): Promise<HydratedDocument<Event>> {
     const date = new Date();
     const event = new EventModel({
       authorId,
-      dateCreated: date,
-      content,
-      dateModified: date
+      //dateCreated: date,
+      start: startdate,
+      end: enddate,
+      title: title,
+      content: content
+      //dateModified: date
     });
     await event.save(); // Saves event to MongoDB
     return event.populate('authorId');
@@ -73,7 +76,7 @@ class EventCollection {
   static async updateOne(eventId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Event>> {
     const event = await EventModel.findOne({_id: eventId});
     event.content = content;
-    event.dateModified = new Date();
+    //event.dateModified = new Date();
     await event.save();
     return event.populate('authorId');
   }

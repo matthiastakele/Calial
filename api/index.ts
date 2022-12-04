@@ -13,6 +13,7 @@ import {likeRouter} from '../server/like/router';
 import {commentRouter} from '../server/comment/router';
 import {followRouter} from '../server/follow/router';
 import {circleRouter} from '../server/circle/router';
+import {eventRouter} from '../server/event/router';
 import MongoStore from 'connect-mongo';
 
 // Load environmental variables
@@ -78,6 +79,7 @@ app.use('/api/likes', likeRouter);
 app.use('/api/comments', commentRouter);
 app.use('/api/follows', followRouter);
 app.use('/api/circles', circleRouter);
+app.use('/api/event', eventRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

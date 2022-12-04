@@ -33,7 +33,7 @@ router.get(
       next();
       return;
     }
-
+    console.log("hi")
     const allEvents = await EventCollection.findAll();
     const response = allEvents.map(util.constructEventResponse);
     res.status(200).json(response);
@@ -67,7 +67,7 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const event = await EventCollection.addOne(userId, req.body.content);
+    const event = await EventCollection.addOne(userId, req.body.title, req.body.start, req.body.end, req.body.content);
 
     res.status(201).json({
       message: 'Your event was created successfully.',
@@ -90,8 +90,8 @@ router.delete(
   '/:eventId?',
   [
     userValidator.isUserLoggedIn,
-    eventValidator.isEventExists,
-    eventValidator.isValidEventModifier
+    eventValidator.isEventExists
+    //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
     await EventCollection.deleteOne(req.params.eventId);
@@ -101,34 +101,34 @@ router.delete(
   }
 );
 
-/**
- * Modify a event
- *
- * @name PATCH /api/events/:id
- *
- * @param {string} content - the new content for the event
- * @return {EventResponse} - the updated event
- * @throws {403} - if the user is not logged in or not the author of
- *                 of the event
- * @throws {404} - If the eventId is not valid
- * @throws {400} - If the event content is empty or a stream of empty spaces
- * @throws {413} - If the event content is more than 140 characters long
- */
-router.patch(
-  '/:eventId?',
-  [
-    userValidator.isUserLoggedIn,
-    eventValidator.isEventExists,
-    eventValidator.isValidEventModifier,
-    eventValidator.isValidEventContent
-  ],
-  async (req: Request, res: Response) => {
-    const event = await EventCollection.updateOne(req.params.eventId, req.body.start, req.body.end, req.body.title);
-    res.status(200).json({
-      message: 'Your event was updated successfully.',
-      event: util.constructEventResponse(event)
-    });
-  }
-);
+// /**
+//  * Modify a event
+//  *
+//  * @name PATCH /api/events/:id
+//  *
+//  * @param {string} content - the new content for the event
+//  * @return {EventResponse} - the updated event
+//  * @throws {403} - if the user is not logged in or not the author of
+//  *                 of the event
+//  * @throws {404} - If the eventId is not valid
+//  * @throws {400} - If the event content is empty or a stream of empty spaces
+//  * @throws {413} - If the event content is more than 140 characters long
+//  */
+// router.patch(
+//   '/:eventId?',
+//   [
+//     userValidator.isUserLoggedIn,
+//     eventValidator.isEventExists,
+//     eventValidator.isValidEventModifier,
+//     eventValidator.isValidEventContent
+//   ],
+//   async (req: Request, res: Response) => {
+//     const event = await EventCollection.updateOne(req.params.eventId, req.body.start, req.body.end, req.body.title);
+//     res.status(200).json({
+//       message: 'Your event was updated successfully.',
+//       event: util.constructEventResponse(event)
+//     });
+//   }
+// );
 
 export {router as eventRouter};

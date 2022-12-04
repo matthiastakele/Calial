@@ -12,12 +12,14 @@ export default {
       method: 'POST',
       hasBody: true,
       fields: [
+        {id: 'title', label: 'Name Of Event', value: ''},
+        {id: 'start', label: 'Start Date', value: ''},
+        {id: 'end', label: 'End Date', value: ''},
         {id: 'content', label: 'Content', value: ''}
       ],
       title: 'Create an event',
-      refreshFreets: true,
       callback: () => {
-        const message = 'Successfully created a freet!';
+        const message = 'Successfully created an event!';
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
       }
