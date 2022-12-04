@@ -78,15 +78,24 @@ export default {
       this.a = event;
       this.b = e;
     },
-    calculateTimeDiff(start, end){
-      startTime = start.split(" ")[1].split(":");
-      endTime = end.split(" ")[1].split(":");
-      hourDiff = (Number(endTime[0])-1 - Number(startTime[0])) * 60;
-      minDiff = (Number(endTime[1])+60 - Number(startTime[1]));
-      return hourDiff + minDiff;
-    },
+    // calculateTimeDiff(start, end){
+    //   startTime = start.split(" ")[1].split(":");
+    //   endTime = end.split(" ")[1].split(":");
+    //   hourDiff = (Number(endTime[0])-1 - Number(startTime[0])) * 60;
+    //   minDiff = (Number(endTime[1])+60 - Number(startTime[1]));
+    //   return hourDiff + minDiff;
+    // },
     // goes through every username in an array and adds the event to a calendar.
     async addEventsForUser(usernames) {
+
+      function calculateTimeDiff(start, end){
+        const startTime = start.split(" ")[1].split(":");
+        const endTime = end.split(" ")[1].split(":");
+        const hourDiff = (Number(endTime[0])-1 - Number(startTime[0])) * 60;
+        const minDiff = (Number(endTime[1])+60 - Number(startTime[1]));
+        return hourDiff + minDiff;
+        }
+
       for (const username of usernames) {
         const allEventsUrl = `/api/events?author=${username}`;
         try {
@@ -95,13 +104,27 @@ export default {
           if (!r.ok) {
             throw new Error(res.error);
           }
+
           // res contains a list of the events for that username
           for (const event of res) {
-            const timeDiff = this.calculateTimeDiff(event.start, event.end);
-            $refs.vuecal.createEvent(event.start, timeDiff, {
-            title: event.title,
-            class: event.class,
-            })
+            // const timeDiff = 500;
+            const timeDiff = calculateTimeDiff(event.start, event.end);
+            this.$refs.vuecal.createEvent(
+              // Formatted start date and time or JavaScript Date object.
+              event.start,
+              // Event duration in minutes (Integer).
+              timeDiff,
+              // Custom event props (optional).
+              { title: event.title, content: event.content }
+            )
+
+
+
+            // const timeDiff = this.calculateTimeDiff(event.start, event.end);
+            // this.$refs.vuecal.createEvent(event.start, timeDiff, {
+            // title: event.title,
+            // content: event.content,
+            // })
           }
         }
         catch (e) {

@@ -42,7 +42,10 @@ router.get(
     userValidator.isAuthorExists
   ],
   async (req: Request, res: Response) => {
+    console.log('Looking for Events of a specific user');
     const authorEvents = await EventCollection.findAllByUsername(req.query.author as string);
+    console.log('authorEvents: ');
+    console.log(authorEvents);
     const response = authorEvents.map(util.constructEventResponse);
     res.status(200).json(response);
   }
