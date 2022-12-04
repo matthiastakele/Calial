@@ -3,6 +3,7 @@
 
 <template>
   <main>
+    <p>Messages Page</p>
     <section>
       <div class="groupOptions">
         <div><CreateGroupForm /></div>
@@ -54,6 +55,12 @@ import GroupComponent from '@/components/Messages/GroupComponent.vue';
 import FreetComponent from '@/components/Freet/FreetComponent.vue';
 export default {
   name: 'MessagesPage',
+  components: { Calendar
+  },
+  beforeMount() {
+    // users needs to be input here as an array
+    // this.$refs.calendar.addEventsForUser(users);
+  },
   components: { 
     Calendar,
     ChangeUsernameForm, 

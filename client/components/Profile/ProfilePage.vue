@@ -42,8 +42,7 @@
       </div>
     </section> -->
     <h2 style="text-align: center;">{{this.username}}, here is your personal Calial calendar:</h2>
-    <Calendar></Calendar>
-
+    <Calendar ref="personalCalendar" />
   </main>
 </template>
 
@@ -58,6 +57,10 @@ import Calendar from '@/components/Profile/Calendar.vue';
 export default {
   name: 'ProfilePage',
   components: {FreetComponent, GetFreetsForm, CreateFreetForm, Calendar},
+  mounted() {
+    console.log('asdfasdf');
+    this.$refs.personalCalendar.addEventsForUser([this.$store.state.profileUsername]);
+  },
   data() {
     return {
       chosen: "freets",
