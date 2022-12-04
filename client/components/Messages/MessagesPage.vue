@@ -4,9 +4,6 @@
 <template>
   <main>
     <p>Messages Page</p>
-    <Calendar
-    ref="calendar"
-    />
     <section>
       <div class="groupOptions">
         <div><CreateGroupForm /></div>
