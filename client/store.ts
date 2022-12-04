@@ -91,7 +91,7 @@ const store = new Vuex.Store({
        */
       const url = state.filter ? `/api/users/${state.filter}/events` : '/api/events'; //SUSPECT
       const res = await fetch(url).then(async r => r.json());
-      state.freets = res;
+      state.events = res;
     },
     async refreshProfileFreets(state) {
       /**
