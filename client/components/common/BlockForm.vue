@@ -135,6 +135,17 @@ export default {
           this.$store.commit('refreshProfileFreets');
         }
 
+        if (this.refreshEvents) {
+          const res = await r.json();
+          const eventId = res.event._id;
+          let options2 = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({eventId: eventId}),
+          };
+          this.$store.commit('refreshEvents');
+        }
+        
         if (this.refreshGroups) {
           this.$store.commit('refreshGroups');
         }
