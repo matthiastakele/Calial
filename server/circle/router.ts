@@ -25,6 +25,7 @@ router.post(
     circleValidator.doesCircleNameExist
   ],
   async (req: Request, res: Response) => {
+    console.log('wee');
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const circle = await CircleCollection.addOne(userId, req.body.circleName);
 
@@ -78,6 +79,30 @@ router.delete(
     await CircleCollection.addUser(req.params.circleId, req.body.username);
     res.status(200).json({
       message: `You added ${req.body.username} to the circle successfully.`
+    });
+  }
+);
+
+/**
+ * Add self to circle
+ *
+ * @name PUT /api/circles/self
+ *
+ * @return {string} - A success message
+ * @throws {403} - If the user is not logged in or is not the author of
+ *                 the freet
+ * @throws {404} - If the circleId is not valid
+ */
+ router.put(
+  '/self',
+  [],
+  async (req: Request, res: Response) => {
+    const userId = (req.session.userId as string) ?? '';
+    const user = await UserCollection.findOneByUserId(userId);
+    const circle = await CircleCollection.findByName(req.body.circleName);
+    await CircleCollection.addUser(circle._id, user.username);
+    res.status(200).json({
+      message: `You added ${userId} to the circle successfully.`
     });
   }
 );
