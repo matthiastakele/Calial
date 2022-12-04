@@ -70,7 +70,7 @@ export default {
 <style scoped>
 nav {
     padding: 1vw 2vw;
-    background-color: rgb(153, 153, 255);
+    background-color: rgb(182, 182, 248);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -78,7 +78,7 @@ nav {
 }
 
 .title {
-    color: rgb(51, 51, 204);
+    color: rgb(6, 6, 88);
     font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 1.75em;
     margin: 0 5px;

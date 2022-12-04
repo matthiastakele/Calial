@@ -4,7 +4,6 @@
 <template>
   <main>
     <br>
-    <br>
     <CreateEventForm/>
     <ViewEventsForm ref = "vieweventsform"/>
     <br>

@@ -140,16 +140,16 @@ export default {
 .vuecal__menu,
 .vuecal__cell-events-count {
   background-color: rgb(153, 153, 255);
-  font-family: Arial;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .vuecal__title-bar {
   background-color: #e4f5ef;
-  font-family: Arial;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .vuecal__cell--today,
 .vuecal__cell--current {
   background-color: rgba(240, 240, 255, 0.4);
-  font-family: Arial;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .vuecal:not(.vuecal--day-view) .vuecal__cell--selected {
   background-color: rgba(235, 255, 245, 0.4);
@@ -184,9 +184,49 @@ export default {
   padding-bottom: 12px;
 }
 
+.vuecal__heading .weekday-label {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  display: flex;
+  font-size: 70%;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+}
+
+.vuecal__time-column .vuecal__time-cell {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: rgb(90, 90, 90) !important;
+  text-align: center !important;
+  font-size: 70% !important;
+}
+
+.vuecal__no-event {
+  /* padding-top: 1em; */
+  color: rgb(148, 148, 148);
+  justify-self: flex-start;
+  margin-bottom: auto;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 70%;
+  }
+
+.vuecal__event-time {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 85%;  
+  display: inline-block;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+}
+
+.vuecal__event-title {
+  padding-top: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .vuecal__event-content {
   font-style: italic;
-  font-family: Arial;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .vuecal__event.leisure {
   background-color: rgba(253, 156, 66, 0.9);
