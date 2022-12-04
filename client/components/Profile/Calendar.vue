@@ -77,7 +77,38 @@ export default {
     deleteEvent(event, e){
       this.a = event;
       this.b = e;
-    }
+    },
+    calculateTimeDiff(start, end){
+      startTime = start.split(" ")[1].split(":");
+      endTime = end.split(" ")[1].split(":");
+      hourDiff = (Number(endTime[0])-1 - Number(startTime[0])) * 60;
+      minDiff = (Number(endTime[1])+60 - Number(startTime[1]));
+      return hourDiff + minDiff;
+    },
+    // goes through every username in an array and adds the event to a calendar.
+    async addEventsForUser(usernames) {
+      for (const username of usernames) {
+        const allEventsUrl = `/api/events?author=${username}`;
+        try {
+          const r = await fetch(allEventsUrl);
+          const res = await r.json();
+          if (!r.ok) {
+            throw new Error(res.error);
+          }
+          // res contains a list of the events for that username
+          for (const event of res) {
+            const timeDiff = this.calculateTimeDiff(event.start, event.end);
+            $refs.vuecal.createEvent(event.start, timeDiff, {
+            title: event.title,
+            class: event.class,
+            })
+          }
+        }
+        catch (e) {
+          // do nothing
+        }
+      }
+    },
   },
 };
 </script>

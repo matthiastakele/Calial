@@ -2,12 +2,15 @@ import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import EventCollection from '../event/collection';
 
+/**
+ * Checks if a event with eventId is req.params exists
+ */
 const isEventExists = async (req: Request, res: Response, next: NextFunction) => {
-  const validFormat = Types.ObjectId.isValid(req.params.freetId);
-  const event = validFormat ? await EventCollection.findOne(req.params.freetId) : '';
+  const validFormat = Types.ObjectId.isValid(req.params.eventId);
+  const event = validFormat ? await EventCollection.findOne(req.params.eventId) : '';
   if (!event) {
     res.status(404).json({
-      error: `Event does not exist.`
+      error: `Event with event ID ${req.params.eventId} does not exist.`
     });
     return;
   }
@@ -16,21 +19,30 @@ const isEventExists = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 /**
- * Checks if the content of the freet in req.body is valid, i.e not a stream of empty
- * spaces and not more than 140 characters
+ * Checks if the content of the event in req.body is valid, i.e a valid time.
  */
 const isValidEventContent = (req: Request, res: Response, next: NextFunction) => {
-  const {content} = req.body as {content: string};
-  if (!content.trim()) {
+  const {start} = req.body as {start: string};
+  const {end} = req.body as {end: string};  
+  if (!start.trim() || !end.trim()) {
     res.status(400).json({
-      error: 'Event content must be at least one character long.'
+      error: 'Event time is not specified.'
     });
     return;
   }
+  next();
+};
 
-  if (content.length > 140) {
-    res.status(413).json({
-      error: 'Event content must be no more than 140 characters.'
+/**
+ * Checks if the current user is the author of the event whose eventId is in req.params
+ * I don't think this one will ever be used.
+ */
+const isValidEventModifier = async (req: Request, res: Response, next: NextFunction) => {
+  const event = await EventCollection.findOne(req.params.eventId);
+  const userId = event.authorId._id;
+  if (req.session.userId !== userId.toString()) {
+    res.status(403).json({
+      error: 'Cannot modify other users\' events.'
     });
     return;
   }
@@ -38,24 +50,8 @@ const isValidEventContent = (req: Request, res: Response, next: NextFunction) =>
   next();
 };
 
-// /**
-//  * Checks if the current user is the author of the freet whose freetId is in req.params
-//  */
-// const isValidEventModifier = async (req: Request, res: Response, next: NextFunction) => {
-//   const event = await EventCollection.findOne(req.params.eventId);
-//   const userId = event.authorId._id;
-//   if (req.session.userId !== userId.toString()) {
-//     res.status(403).json({
-//       error: 'Cannot modify other users events.'
-//     });
-//     return;
-//   }
-
-//   next();
-// };
-
 export {
   isValidEventContent,
-  isEventExists
-  //isValidEventModifier
+  isEventExists,
+  isValidEventModifier
 };
