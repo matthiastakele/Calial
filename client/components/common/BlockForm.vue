@@ -12,14 +12,31 @@
         :key="field.id"
       >
         <label :for="field.id">{{ field.label }}:</label>
-        <textarea :placeholder= message
+        <textarea class="content-text" :placeholder= message
           v-if="field.id === 'content'"
+          font-family = 'Arial'
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
         />
         <input
-          v-else
+          v-else-if = "field.id === 'title'"
+          :placeholder = message1 
+          :type="field.id === 'password' ? 'password' : 'text'"
+          :name="field.id"
+          :value="field.value"
+          @input="field.value = $event.target.value"
+        >
+        <input
+          v-else-if = "(field.id === 'start' || field.id === 'end')"
+          :placeholder = message2 
+          :type="field.id === 'password' ? 'password' : 'text'"
+          :name="field.id"
+          :value="field.value"
+          @input="field.value = $event.target.value"
+        >
+        <input
+          v-else 
           :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
@@ -55,7 +72,7 @@ export default {
     /**
      * Options for submitting this form.
      */
-    let messages = ["Share something! 😄", "✨Be you.✨", "What's on your mind? 🤔", "Use your voice 📣", "Post as you please 💃"];
+    let messages = ["Name of the event", "Enter in YYYY-MM-DD HH:MM format", "Location (or other additional information you might want to include) goes here"];
     return {
       url: '', // Url to submit form to
       method: 'GET', // Form request method
@@ -65,7 +82,9 @@ export default {
       refreshGroups: false,
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission
-      message: messages[Math.floor(Math.random() * messages.length)]
+      message1: messages[0],
+      message2: messages[1],
+      message: messages[2]
     };
   },
   methods: {
@@ -116,6 +135,17 @@ export default {
           this.$store.commit('refreshProfileFreets');
         }
 
+        if (this.refreshEvents) {
+          const res = await r.json();
+          const eventId = res.event._id;
+          let options2 = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({eventId: eventId}),
+          };
+          this.$store.commit('refreshEvents');
+        }
+        
         if (this.refreshGroups) {
           this.$store.commit('refreshGroups');
         }
@@ -182,5 +212,10 @@ textarea {
   width: 125px;
   height: 125px;
   text-align: center;
+}
+.content-text {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 15px;
+  font-weight: 600;
 }
 </style>
