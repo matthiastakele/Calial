@@ -146,6 +146,9 @@ export default {
   background-color: #e4f5ef;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+.vuecal__cell-date {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;  
+}
 .vuecal__cell--today,
 .vuecal__cell--current {
   background-color: rgba(240, 240, 255, 0.4);
