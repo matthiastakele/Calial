@@ -12,6 +12,7 @@ export default {
       method: 'POST',
       hasBody: true,
       refreshEvents: true,
+      refreshGroupEvents: true,
       fields: [
         {id: 'title', label: 'Event name', value: ''},
         {id: 'start', label: 'Start time', value: ''},

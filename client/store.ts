@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     username: null, // Username of the logged in user
     userId: null,
     events: [],
+    groupEvents: [],
     profileUsername: null, // current clicked on profile username (particularly helpful when clicking other users)
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     groups: [],
@@ -126,21 +127,24 @@ const store = new Vuex.Store({
         return freetIds.includes(freet._id);
       });
     },
-    async refreshGroups(state) {
-      /**
-       * Request the server for the currently available freets.
-       */
-      const url = `/api/circles`;
-      const res = await fetch(url).then(async r => r.json());
-      Vue.set(state, 'groups', []);
-      for (let i = 0; i < res.length; i++) {
-        // state.groups.push(res[i])
-        state.groups.push(res[i].name);
-      }
-    }, 
     selectGroup(state, group){
       Vue.set(state, 'currentGroup', group);
-    }
+    },
+    async refreshGroupEvents(state){
+      const eventsUrl = `/api/events`;
+      const events = await fetch(eventsUrl).then(async r => r.json());
+
+      const url = `/api/circles/users/name/${state.currentGroup}`;
+      const users = await fetch(url).then(async r => r.json());
+      Vue.set(state, 'groupEvents', []);
+      for (let i = 0; i < events.length; i++){
+        const getIdUrl = `/api/users/userIds/${events[i].author}`;
+        const userId = await fetch(getIdUrl).then(async r => r.json());
+        if (users.users.indexOf(userId.userId) > -1){
+          state.groupEvents.push(events[i])
+        }
+      }
+    },
   },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]

@@ -11,6 +11,9 @@
       </div>
       
     </section>
+    <div>
+      <CreateEventForm/>
+    </div>
     <div class="groupsPane">
       <h3>Your Groups</h3>
       <!-- {{$store.state.groups}} -->
@@ -41,7 +44,22 @@
       </article> -->
 
     </div>
-    <div class="two">Events</div>
+    <div class="two">
+      <CreateEventForm/>
+      <div class="proposedEvents">
+      <ProposedEventComponent
+        v-for="group in $store.state.groupEvents"
+        :groupName=group
+      />
+      <!-- <button>
+        {{$store.state.events}}
+      </button>
+      <button>
+        {{$store.state.groupEvents}}
+      </button> -->
+    </div>
+    </div>
+    
     <div class="three"> 
       <h3>Live Chat</h3>
       <h5>Your Displayed Name: {{username}}</h5>
@@ -96,6 +114,8 @@ import JoinGroupForm from '@/components/Messages/JoinGroupForm.vue';
 import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
 import GroupComponent from '@/components/Messages/GroupComponent.vue';
 import FreetComponent from '@/components/Freet/FreetComponent.vue';
+import CreateEventForm from '@/components/Discover/CreateEventForm.vue';
+import ProposedEventComponent from '@/components/Messages/ProposedEventComponent.vue';
 import io from "socket.io-client";
 export default {
   name: 'MessagesPage',
@@ -110,10 +130,13 @@ export default {
     ChangeUsernameForm, 
     CreateGroupForm,
     JoinGroupForm,
-    GroupComponent
+    GroupComponent,
+    CreateEventForm,
+    ProposedEventComponent
   },
   mounted() {
     this.$store.commit('refreshGroups');
+    this.$store.commit('refreshGroupEvents');
   },
   data() {
     return {
@@ -238,11 +261,38 @@ export default {
     background-color:orange;
     float: left;
     width:40%;
+  /* display: flex; */
+  background-color: aqua;
+  
+  /* flex-flow: row wrap; */
+  
+  /* justify-content: space-around; */
+  
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 .three
 {
     background-color: hotpink;
     float: left;
     width:40%;
+}
+.proposedEvents {
+  /* background-color:orange; */
+  /* float: left; */
+  /* width:40%; */
+  display: flex;
+  /* background-color: aqua; */
+  
+  flex-flow: row wrap;
+  
+  justify-content: space-evenly;
+  align-content: space-between;
+  
+  padding: 0;
+  margin: 5px;
+  gap: 10px;
+  list-style: none;
 }
 </style>

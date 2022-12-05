@@ -80,6 +80,7 @@ export default {
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
       refreshGroups: false,
+      refreshGroupEvents: false,
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission
       message1: messages[0],
@@ -148,6 +149,10 @@ export default {
         
         if (this.refreshGroups) {
           this.$store.commit('refreshGroups');
+        }
+
+        if (this.refreshGroupEvents){
+          this.$store.commit('refreshGroupEvents');
         }
 
         if(this.signOut){
