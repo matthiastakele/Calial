@@ -249,4 +249,23 @@ export default {
   border: 1px solid rgb(235, 82, 82);
   color: #fff;
 }
+
+.vuecal__event-delete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 1.4em;
+    line-height: 1.4em;
+    background-color: #dd3333d9;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 85%;
+}
 </style>

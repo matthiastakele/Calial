@@ -107,10 +107,11 @@ router.delete(
     //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
-    // const userId = (req.session.userId as string) ?? ''; 
-    // const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
-    // const id = event._id;
-    await EventCollection.deleteOne(req.params.eventId);
+    console.log('delete request reached');
+    const userId = (req.session.userId as string) ?? ''; 
+    const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
+    const id = event._id;
+    await EventCollection.deleteOne(id);
     res.status(200).json({
       message: 'Your event was deleted successfully.'
     });
