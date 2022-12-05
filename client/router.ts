@@ -11,6 +11,7 @@ import NotFound from './NotFound.vue';
 Vue.use(VueRouter);
 
 const routes = [
+  {path: '/', name: 'Login', component: LoginPage}, // this is kind of faulty right now, but a user has no reason to go to the "empty" path.
   {path: '/discover', name: 'Discover', component: DiscoverPage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
