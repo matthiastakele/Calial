@@ -18,7 +18,7 @@
       :on-event-create="createEvent"
       @event-delete="deleteEvent"
       @event-title-change="changeTitle"
-      @event-drop="changeTime"
+      @event-drop="changeDrop"
       @event-duration-change="changeDuration"
       :dblclickToNavigate="false"
       :events="events"
@@ -76,7 +76,6 @@ export default {
       this.events = [];
     } */
     async createEvent(event, deleteEventFunction) {
-      this.test = event.content;
       const start = this.convertDate(event.start);
       const end = this.convertDate(event.end);
       let options = {
@@ -86,14 +85,13 @@ export default {
           authorId: this.$store.state.username,
           start: start,
           end: end,
-          content: event.content,
+          content: event.title,
         }),
       };
       await fetch(`/api/events`, options);
       return event;
     },
     async deleteEvent(event, e) {
-      //this.test = e;
       const start = this.convertDate(event.start);
       const end = this.convertDate(event.end);
       let options = {
@@ -106,17 +104,23 @@ export default {
       };
       await fetch(`/api/events`, options);
     },
-    async changeDuration(event, e){
+    async changeDuration(event){
       const originalEvent = event.originalEvent;
       const newEvent = event.event;
       this.test = originalEvent;
       this.deleteEvent(originalEvent, "_");
       this.createEvent(newEvent, "_");
     },
-    async changeTitle(event, e){
+    async changeTitle(event){
+      this.test = event;
       const originalEvent = event.event;
-      this.deleteEvent(originalEvent, "_");
+      //this.deleteEvent(originalEvent, "_");
       this.createEvent(originalEvent, "_");
+    },
+    async changeDrop(event){
+      const originalEvent = event.originalEvent;
+      //this.test = originalEvent;
+      this.deleteEvent(originalEvent, "_");
     },
     convertDate(date) {
       const year = date.getFullYear();
@@ -156,7 +160,7 @@ export default {
               // Event duration in minutes (Integer).
               timeDiff,
               // Custom event props (optional).
-              { title: event.title, content: event.content, class: "leisure" }
+              { title: event.title, title: event.content, class: "leisure" }
             );
 
             // const timeDiff = this.calculateTimeDiff(event.start, event.end);
