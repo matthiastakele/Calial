@@ -18,7 +18,7 @@ export default {
       ],
       title: 'Sign in',
       callback: () => {
-        this.$router.push({name: 'Profile'});
+        this.$router.push({name: 'Discover'}); // will want to change this back to Profile later
         this.$store.commit('alert', {
           message: 'You are now signed in!', status: 'success'
         });
