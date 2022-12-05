@@ -103,7 +103,7 @@ router.post(
  * @throws {404} - If the eventId is not valid
  */
 router.delete(
-  "/",
+  "/:eventId?",
   [
     userValidator.isUserLoggedIn,
     //eventValidator.isEventExists
