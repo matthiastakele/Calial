@@ -4,6 +4,7 @@
 <template>
   <main>
     <br>
+    <h1 style="font-size:30px"><center><b>Welcome back, @{{$store.state.username}}</b></center></h1>
     <CreateEventForm/>
     <ViewEventsForm ref = "vieweventsform"/>
     <p style="font-size:30px" ><center><b>Discover Events</b> </center></p>
