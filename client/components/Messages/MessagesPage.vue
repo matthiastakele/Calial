@@ -11,6 +11,9 @@
       </div>
       
     </section>
+    <div class = "compiledCalendar">
+      <Calendar ref="personalCalendar" />
+    </div>
     <div class="groupsPane">
       <h3>Your Groups</h3>
       <!-- {{$store.state.groups}} -->
@@ -41,7 +44,9 @@
       </article> -->
 
     </div>
-    <div class="two">Events</div>
+    <div class="two">
+      Events
+    </div>
     <div class="three"> 
       <h3>Live Chat</h3>
       <h5>Your Displayed Name: {{username}}</h5>
@@ -101,9 +106,11 @@ export default {
   name: 'MessagesPage',
   components: { Calendar
   },
-  beforeMount() {
-    // users needs to be input here as an array
-    // this.$refs.calendar.addEventsForUser(users);
+  mounted() {
+    this.$refs.personalCalendar.addEventsForUser([this.$store.state.username]);
+  },
+  updated() {
+    this.$refs.personalCalendar.addEventsForUser([this.$store.state.username]);
   },
   components: { 
     Calendar,
