@@ -91,7 +91,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-      const url = state.filter ? `/api/users/${state.filter}/events` : '/api/events'; //SUSPECT
+      const url = '/api/events'; //SUSPECT
       const res = await fetch(url).then(async r => r.json());
       state.events = res;
     },
