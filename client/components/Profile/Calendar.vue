@@ -6,7 +6,7 @@
       style="height: 600px"
       today-button
       :disable-views="['years']"
-      editable-events
+      :editable-events="{ title: true, drag: false, resize: true, delete: true, create: true }"
       :drag-to-create-event="false"
       :cell-click-hold="false"
       @cell-dblclick="
@@ -32,11 +32,15 @@ import VueCal from "vue-cal";
 export default {
   components: { VueCal },
   async created() {
-    const events = await(`/api/events?author=${this.$store.state.profileUsername}`);
-    for(event of events){
-      this.events.push({start: event.start, end: event.end, content: event.content});
+    const events =
+      await `/api/events?author=${this.$store.state.profileUsername}`;
+    for (event of events) {
+      this.events.push({
+        start: event.start,
+        end: event.end,
+        titke: event.title,
+      });
     }
-    //this.test = this.events;
   },
   data: () => ({
     a: "",
@@ -85,7 +89,23 @@ export default {
           authorId: this.$store.state.username,
           start: start,
           end: end,
-          content: event.title,
+          title: event.title,
+        }),
+      };
+      await fetch(`/api/events`, options);
+      return event;
+    },
+    async editEvent(event, deleteEventFunction) {
+      const start = this.convertDate(event.start);
+      const end = this.convertDate(event.end);
+      let options = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          authorId: this.$store.state.username,
+          start: start,
+          end: end,
+          title: event.title,
         }),
       };
       await fetch(`/api/events`, options);
@@ -104,23 +124,23 @@ export default {
       };
       await fetch(`/api/events`, options);
     },
-    async changeDuration(event){
+    async changeDuration(event) {
       const originalEvent = event.originalEvent;
       const newEvent = event.event;
-      this.test = originalEvent;
       this.deleteEvent(originalEvent, "_");
       this.createEvent(newEvent, "_");
     },
-    async changeTitle(event){
-      this.test = event;
-      const originalEvent = event.event;
-      //this.deleteEvent(originalEvent, "_");
-      this.createEvent(originalEvent, "_");
+    async changeTitle(event) {
+      const newEvent = event.event;
+      //this.deleteEvent(newEvent, "_");
+      this.editEvent(newEvent, "_");
     },
-    async changeDrop(event){
+    async changeDrop(event) {
+      this.test = event;
       const originalEvent = event.originalEvent;
-      //this.test = originalEvent;
-      this.deleteEvent(originalEvent, "_");
+      const newEvent = event.event;
+      // this.deleteEvent(originalEvent, "_");
+      // this.createEvent(newEvent, "_");
     },
     convertDate(date) {
       const year = date.getFullYear();
@@ -160,7 +180,7 @@ export default {
               // Event duration in minutes (Integer).
               timeDiff,
               // Custom event props (optional).
-              { title: event.title, title: event.content, class: "leisure" }
+              { title: event.title, content: event.content, class: "leisure" }
             );
 
             // const timeDiff = this.calculateTimeDiff(event.start, event.end);
@@ -182,19 +202,23 @@ export default {
 .vuecal__menu,
 .vuecal__cell-events-count {
   background-color: rgb(153, 153, 255);
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 .vuecal__title-bar {
   background-color: #e4f5ef;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 .vuecal__cell-date {
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;  
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 .vuecal__cell--today,
 .vuecal__cell--current {
   background-color: rgba(240, 240, 255, 0.4);
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 .vuecal:not(.vuecal--day-view) .vuecal__cell--selected {
   background-color: rgba(235, 255, 245, 0.4);
@@ -224,7 +248,8 @@ export default {
 }
 
 .vuecal__heading .weekday-label {
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
   display: flex;
   font-size: 70%;
   font-weight: bold;
@@ -233,7 +258,8 @@ export default {
 }
 
 .vuecal__time-column .vuecal__time-cell {
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
   color: rgb(90, 90, 90) !important;
   text-align: center !important;
   font-size: 70% !important;
@@ -244,13 +270,15 @@ export default {
   color: rgb(148, 148, 148);
   justify-self: flex-start;
   margin-bottom: auto;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
   font-size: 70%;
-  }
+}
 
 .vuecal__event-time {
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 85%;  
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  font-size: 85%;
   display: inline-block;
   margin-bottom: 3px;
   padding-bottom: 3px;
@@ -260,13 +288,15 @@ export default {
   padding-top: 6px;
   font-size: 15px;
   font-weight: bold;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 
 .vuecal__event-content {
   font-style: italic;
   font-size: 15px;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
 }
 .vuecal__event.leisure {
   background-color: rgba(253, 156, 66, 0.9);
@@ -280,21 +310,22 @@ export default {
 }
 
 .vuecal__event-delete {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 1.4em;
-    line-height: 1.4em;
-    background-color: #dd3333d9;
-    color: #fff;
-    cursor: pointer;
-    transition: .3s;
-    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 85%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 1.4em;
+  line-height: 1.4em;
+  background-color: #dd3333d9;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  font-size: 85%;
 }
 </style>
