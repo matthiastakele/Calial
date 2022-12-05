@@ -109,6 +109,11 @@ class CircleCollection {
       return circle.users;
     }
 
+    static async findAllUsersByCircleName(circleName: Types.ObjectId | string): Promise<Array<Types.ObjectId | string>> {
+      const circle = await CircleModel.findOne({name: circleName});
+      return circle.users;
+    }
+
   /**
    * Get all the freets by circle id
    * @param {string} circleId - The id of the circle

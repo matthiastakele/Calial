@@ -12,6 +12,7 @@ export default {
       method: 'PUT',
       hasBody: true,
       refreshGroups: true,
+      refreshGroupEvents: true,
       fields: [
         {id: 'circleName', label: 'GroupName', value: ''}
       ],

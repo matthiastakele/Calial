@@ -3,7 +3,6 @@
 
 <template>
   <main>
-    <p>Messages Page</p>
     <section>
       <div class="groupOptions">
         <div><CreateGroupForm /></div>
@@ -17,9 +16,6 @@
     <div class="groupsPane">
       <h3>Your Groups</h3>
       <!-- {{$store.state.groups}} -->
-      <!-- <button @click="testing">
-        hi
-      </button> -->
       <div class="reverseorder">
         <GroupComponent
           v-for="group in $store.state.groups"
@@ -45,8 +41,23 @@
 
     </div>
     <div class="two">
-      Events
+      <h3>Propose an Event</h3>
+      <CreateEventForm/>
+      <h3>Suggested Events from other Members of the Group</h3>
+      <div class="proposedEvents">
+        <ProposedEventComponent
+          v-for="group in $store.state.groupEvents"
+          :groupName=group
+        />
+        <!-- <button>
+          {{$store.state.events}}
+        </button>
+        <button>
+          {{$store.state.groupEvents}}
+        </button> -->
+      </div>
     </div>
+    
     <div class="three"> 
       <h3>Live Chat</h3>
       <h5>Your Displayed Name: {{username}}</h5>
@@ -101,6 +112,8 @@ import JoinGroupForm from '@/components/Messages/JoinGroupForm.vue';
 import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
 import GroupComponent from '@/components/Messages/GroupComponent.vue';
 import FreetComponent from '@/components/Freet/FreetComponent.vue';
+import CreateEventForm from '@/components/Discover/CreateEventForm.vue';
+import ProposedEventComponent from '@/components/Messages/ProposedEventComponent.vue';
 import io from "socket.io-client";
 export default {
   name: 'MessagesPage',
@@ -117,10 +130,13 @@ export default {
     ChangeUsernameForm, 
     CreateGroupForm,
     JoinGroupForm,
-    GroupComponent
+    GroupComponent,
+    CreateEventForm,
+    ProposedEventComponent
   },
   mounted() {
     this.$store.commit('refreshGroups');
+    this.$store.commit('refreshGroupEvents');
   },
   data() {
     return {
@@ -216,6 +232,9 @@ export default {
 </script>
 
 <style scoped>
+.proposedEvents{
+
+}
 .groupButtons{
   background-color: #ffffff;
   font-size: 16px;
@@ -235,21 +254,55 @@ export default {
 {  
   /* padding-top: 15px; */
   text-align: center;
-  border: 1px solid #111;
+  border: 3px solid #111;
   float: left;  
-  width:20%;
+  width:15%;
   height:100%
 }
 .two
 {
-    background-color:orange;
+    /* background-color:orange; */
     float: left;
-    width:40%;
+    width:50%;
+  /* display: flex; */
+  /* background-color: aqua; */
+  
+  /* flex-flow: row wrap; */
+  
+  /* justify-content: space-around; */
+  border: 3px solid black;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
 }
 .three
 {
-    background-color: hotpink;
+    /* background-color: hotpink; */
+    text-align: center;
+    border: 3px solid #111;
     float: left;
-    width:40%;
+    width:30%;
+    padding: 5px;
+}
+.proposedEvents {
+  /* background-color:orange; */
+  /* float: left; */
+  /* width:40%; */
+  display: flex;
+  /* background-color: aqua; */
+  
+  flex-flow: row wrap;
+  
+  justify-content: space-evenly;
+  align-content: space-between;
+  
+  padding: 0;
+  margin: 5px;
+  gap: 10px;
+  list-style: none;
 }
 </style>

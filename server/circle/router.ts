@@ -170,6 +170,20 @@ router.delete(
 );
 
 router.get(
+  '/users/name/:circleName?',
+  [
+    userValidator.isUserLoggedIn
+  ],
+  async (req: Request, res: Response) => {
+    //const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    const users = await CircleCollection.findAllUsersByCircleName(req.params.circleName);
+    res.status(200).json({
+      users
+    });
+  }
+);
+
+router.get(
   '/testing',
   [],
   async (req: Request, res: Response) => {

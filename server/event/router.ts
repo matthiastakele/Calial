@@ -1,10 +1,10 @@
-import type {NextFunction, Request, Response} from 'express';
-import express from 'express';
-import EventModel from './model';
-import EventCollection from './collection';
-import * as userValidator from '../user/middleware';
-import * as eventValidator from '../event/middleware';
-import * as util from './util';
+import type { NextFunction, Request, Response } from "express";
+import express from "express";
+import EventModel from "./model";
+import EventCollection from "./collection";
+import * as userValidator from "../user/middleware";
+import * as eventValidator from "../event/middleware";
+import * as util from "./util";
 
 const router = express.Router();
 
@@ -27,25 +27,25 @@ const router = express.Router();
  *
  */
 router.get(
-  '/',
+  "/",
   async (req: Request, res: Response, next: NextFunction) => {
     // Check if author query parameter was supplied
     if (req.query.author !== undefined) {
       next();
       return;
     }
-    console.log("hi")
+    console.log("hi");
     const allEvents = await EventCollection.findAll();
     const response = allEvents.map(util.constructEventResponse);
     res.status(200).json(response);
   },
-  [
-    userValidator.isAuthorExists
-  ],
+  [userValidator.isAuthorExists],
   async (req: Request, res: Response) => {
-    console.log('Looking for Events of a specific user');
-    const authorEvents = await EventCollection.findAllByUsername(req.query.author as string);
-    console.log('authorEvents: ');
+    console.log("Looking for Events of a specific user");
+    const authorEvents = await EventCollection.findAllByUsername(
+      req.query.author as string
+    );
+    console.log("authorEvents: ");
     console.log(authorEvents);
     const response = authorEvents.map(util.constructEventResponse);
     res.status(200).json(response);
@@ -64,26 +64,29 @@ router.get(
  * @throws {413} - If the event content is more than 140 characters long
  */
 router.post(
-  '/',
-  [
-    userValidator.isUserLoggedIn,
-    eventValidator.isValidEventContent
-  ],
+  "/",
+  [userValidator.isUserLoggedIn, eventValidator.isValidEventContent],
   async (req: Request, res: Response) => {
-    const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    const userId = (req.session.userId as string) ?? ""; // Will not be an empty string since its validated in isUserLoggedIn
     const events = await EventCollection.findAllByUserId(userId as string);
     let taken = false;
-    for(const e of events){
-      if(e.start == req.body.start && e.end == req.body.end){
+    for (const e of events) {
+      if (e.start == req.body.start && e.end == req.body.end) {
         taken = true;
       }
     }
-    if(!taken){
-      const event = await EventCollection.addOne(userId, req.body.title, req.body.start, req.body.end, req.body.content);
+    if (!taken) {
+      const event = await EventCollection.addOne(
+        userId,
+        req.body.title,
+        req.body.start,
+        req.body.end,
+        req.body.content
+      );
 
       res.status(201).json({
-        message: 'Your event was created successfully.',
-        event: util.constructEventResponse(event)
+        message: "Your event was created successfully.",
+        event: util.constructEventResponse(event),
       });
     }
   }
@@ -100,29 +103,50 @@ router.post(
  * @throws {404} - If the eventId is not valid
  */
 router.delete(
-  '/:eventId?',
+  "/",
   [
-    userValidator.isUserLoggedIn
+    userValidator.isUserLoggedIn,
     //eventValidator.isEventExists
     //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
-    console.log('delete request reached');
     let id = null;
-    if (req.params)
-    {
+    if (req.params.eventId) {
       id = req.params.eventId;
-      // console.log(req.params);
-    }
-    else
-    {
-      const userId = (req.session.userId as string) ?? ''; 
-      const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
-      id = event._id;
+    } else {
+      const userId = (req.session.userId as string) ?? "";
+      const event = await EventModel.findOne({
+        authorId: userId,
+        start: req.body.start,
+        end: req.body.end,
+      });
+      id = await event._id;
     }
     await EventCollection.deleteOne(id);
     res.status(200).json({
-      message: 'Your event was deleted successfully.'
+      message: "Your event was deleted successfully.",
+    });
+  }
+);
+
+router.put(
+  "/",
+  [
+    userValidator.isUserLoggedIn,
+    //eventValidator.isEventExists
+    //eventValidator.isValidEventModifier
+  ],
+  async (req: Request, res: Response) => {
+    const userId = (req.session.userId as string) ?? "";
+    const event = await EventModel.findOne({
+      authorId: userId,
+      start: req.body.start,
+      end: req.body.end,
+    });
+    const id = await event._id;
+    await EventCollection.updateOne(id, req.body.title, req.body.start, req.body.end, "");
+    res.status(200).json({
+      message: "Your event was updated successfully.",
     });
   }
 );
@@ -141,20 +165,26 @@ router.delete(
  * @throws {413} - If the event content is more than 140 characters long
  */
 router.patch(
-  '/:eventId?',
+  "/:eventId?",
   [
     userValidator.isUserLoggedIn,
-    eventValidator.isEventExists
+    eventValidator.isEventExists,
     // eventValidator.isValidEventModifier,
     // eventValidator.isValidEventContent
   ],
   async (req: Request, res: Response) => {
-    const event = await EventCollection.updateOne(req.params.eventId, req.body.title, req.body.start, req.body.end, req.body.content);
+    const event = await EventCollection.updateOne(
+      req.params.eventId,
+      req.body.title,
+      req.body.start,
+      req.body.end,
+      req.body.content
+    );
     res.status(200).json({
-      message: 'Your event was updated successfully.',
-      event: util.constructEventResponse(event)
+      message: "Your event was updated successfully.",
+      event: util.constructEventResponse(event),
     });
   }
 );
 
-export {router as eventRouter};
+export { router as eventRouter };
