@@ -113,7 +113,7 @@ export default {
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
           const res = await r.json();
-          const freetId = res.freet._id;
+          const freetId = res.freet?._id;
           throw new Error(res.error);
         }
 
@@ -121,7 +121,7 @@ export default {
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setUsername', res.user ? res.user.username : null);
-          this.$store.commit('setUserId', res.user._id);
+          this.$store.commit('setUserId', res.user ? res.user._id : null);
         }
 
         if (this.refreshFreets) {
@@ -155,9 +155,9 @@ export default {
           this.$store.commit('refreshGroupEvents');
         }
 
-        if(this.signOut){
-          this.$store.reset();
-        }
+        // if(this.signOut){
+        //   this.$store.reset();
+        // }
 
         if (this.callback) {
           this.callback();

@@ -1,17 +1,22 @@
 <template>
   <main>
-    <p>{{this.a}}</p>
-    <p>{{this.b}}</p>
-    <button @click="customEventCreation">
-      button
-    </button>
+    <p>{{ this.test }}</p>
     <vue-cal
       ref="vuecal"
       style="height: 600px"
       :disable-views="['years']"
       editable-events
-      :on-event-dblclick="deleteEvent"
-      :dblclickToNavigate = "false"
+      :drag-to-create-event="false"
+      :cell-click-hold="false"
+      @cell-dblclick="
+        $refs.vuecal.createEvent($event, 60, {
+          title: 'New Event',
+          class: 'leisure',
+        })
+      "
+      :on-event-create="createEvent"
+      @event-delete="deleteEvent"
+      :dblclickToNavigate="false"
       :events="events"
     >
     </vue-cal>
@@ -25,20 +30,11 @@ export default {
   data: () => ({
     a: "",
     b: "",
+    test: "",
     selectedEvent: null,
     showEventCreationDialog: false,
     eventsCssClasses: ["leisure", "sport", "health"],
-    events: [
-      {
-        start: "2022-12-01 1:00",
-        end: "2022-12-01 3:00",
-        title: "Need to go shopping",
-        class: "leisure",
-        deletable: false,
-        resizable: false,
-        draggable: false,
-      },
-    ],
+    events: [],
     colors: [
       "blue",
       "indigo",
@@ -68,34 +64,54 @@ export default {
       e.stopPropagation();
       this.events = [];
     } */
-    createEvent(){
-      $refs.vuecal.createEvent($event, 60, {
-          title: 'New Event',
-          class: 'leisure',
-        })
+    async createEvent(event, deleteEventFunction) {
+      const start = this.convertDate(event.start);
+      const end = this.convertDate(event.end);
+      let options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          authorId: this.$store.state.username,
+          start: start,
+          end: end,
+          content: event.content,
+        }),
+      };
+      await fetch(`/api/events`, options);
+      return event;
     },
-    deleteEvent(event, e){
-      this.a = event;
-      this.b = e;
+    async deleteEvent(event, e) {
+      const start = this.convertDate(event.start);
+      const end = this.convertDate(event.end);
+      let options = {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          start: start,
+          end: end,
+        }),
+      };
+      await fetch(`/api/events`, options);
     },
-    // calculateTimeDiff(start, end){
-    //   startTime = start.split(" ")[1].split(":");
-    //   endTime = end.split(" ")[1].split(":");
-    //   hourDiff = (Number(endTime[0])-1 - Number(startTime[0])) * 60;
-    //   minDiff = (Number(endTime[1])+60 - Number(startTime[1]));
-    //   return hourDiff + minDiff;
-    // },
+    convertDate(date) {
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+      const hour =
+        date.getHours() > 9 ? date.getHours() : "0" + date.getHours();
+      const minutes =
+        date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
+      return year + "-" + month + "-" + day + " " + hour + ":" + minutes;
+    },
+    calculateTimeDiff(start, end) {
+      const startTime = start.split(" ")[1].split(":");
+      const endTime = String(end).split(" ")[1].split(":");
+      const hourDiff = (Number(endTime[0]) - 1 - Number(startTime[0])) * 60;
+      const minDiff = Number(endTime[1]) + 60 - Number(startTime[1]);
+      return hourDiff + minDiff;
+    },
     // goes through every username in an array and adds the event to a calendar.
     async addEventsForUser(usernames) {
-
-      function calculateTimeDiff(start, end){
-        const startTime = start.split(" ")[1].split(":");
-        const endTime = end.split(" ")[1].split(":");
-        const hourDiff = (Number(endTime[0])-1 - Number(startTime[0])) * 60;
-        const minDiff = (Number(endTime[1])+60 - Number(startTime[1]));
-        return hourDiff + minDiff;
-        }
-
       for (const username of usernames) {
         const allEventsUrl = `/api/events?author=${username}`;
         try {
@@ -108,17 +124,15 @@ export default {
           // res contains a list of the events for that username
           for (const event of res) {
             // const timeDiff = 500;
-            const timeDiff = calculateTimeDiff(event.start, event.end);
+            const timeDiff = this.calculateTimeDiff(event.start, event.end);
             this.$refs.vuecal.createEvent(
               // Formatted start date and time or JavaScript Date object.
               event.start,
               // Event duration in minutes (Integer).
               timeDiff,
               // Custom event props (optional).
-              { title: event.title, content: event.content }
-            )
-
-
+              { title: event.title, content: event.content, class: "leisure" }
+            );
 
             // const timeDiff = this.calculateTimeDiff(event.start, event.end);
             // this.$refs.vuecal.createEvent(event.start, timeDiff, {
@@ -126,8 +140,7 @@ export default {
             // content: event.content,
             // })
           }
-        }
-        catch (e) {
+        } catch (e) {
           // do nothing
         }
       }
@@ -145,6 +158,9 @@ export default {
 .vuecal__title-bar {
   background-color: #e4f5ef;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.vuecal__cell-date {
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;  
 }
 .vuecal__cell--today,
 .vuecal__cell--current {
@@ -232,5 +248,24 @@ export default {
   background-color: rgba(255, 102, 102, 0.9);
   border: 1px solid rgb(235, 82, 82);
   color: #fff;
+}
+
+.vuecal__event-delete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 1.4em;
+    line-height: 1.4em;
+    background-color: #dd3333d9;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 85%;
 }
 </style>

@@ -5,13 +5,13 @@
   <main>
     <section>
       <header>
-        <h2>New to Fritter?</h2>
+        <h2>Sign up for Calial:</h2>
       </header>
       <RegisterForm />
     </section>
     <section>
       <header>
-        <h2>Have an account?</h2>
+        <h2>Returning user?</h2>
       </header>
       <LoginForm />
     </section>

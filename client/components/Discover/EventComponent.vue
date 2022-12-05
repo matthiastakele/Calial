@@ -122,7 +122,6 @@
 <script>
 import LikeComponent from '@/components/Like/LikeComponent.vue'
 import FollowComponent from '@/components/Follow/FollowComponent.vue'
-
 export default {
   name: 'EventComponent',
   props: {
@@ -188,7 +187,6 @@ export default {
       //   setTimeout(() => this.$delete(this.alerts, error), 3000);
       //   return;
       // }
-
       const params = {
         method: 'PATCH',
         message: 'Successfully edited event!',
@@ -226,12 +224,10 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
-
         this.editing = false;
         //this.$store.commit('refreshFreets');
         //this.$store.commit('refreshProfileFreets');
         this.$store.commit('refreshEvents');
-
         params.callback();
       } catch (e) {
         this.$set(this.alerts, e, 'error');
@@ -263,7 +259,6 @@ export default {
     padding: 20px;
     position: relative;
 }
-
 .top{
   /* display: flex; */
   align-items: center;
@@ -271,17 +266,13 @@ export default {
   margin-bottom: 10px;
   width: 15%;
 }
-
-
 .top .left, .top .right{
   display: flex;
   flex: 1;
 }
-
 .h4 .h5 .h6 {
   font-size: 40px;
 }
-
 .desc {
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: bold;
@@ -292,14 +283,12 @@ export default {
   border-bottom-color:rgb(0, 0, 0);
   border-bottom-style: solid;
 }
-
 #author {
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: bold;
   font-size: 1.5em;
   padding-bottom: 20px;
 }
-
 span.profilePic{
   background: rgb(153, 153, 255);
   border-radius: 50%;
@@ -314,4 +303,3 @@ span.profilePic{
   width: 60px;
 }
 </style>
-
