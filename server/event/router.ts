@@ -108,9 +108,18 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     console.log('delete request reached');
-    const userId = (req.session.userId as string) ?? ''; 
-    const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
-    const id = event._id;
+    let id = null;
+    if (req.params)
+    {
+      id = req.params.eventId;
+      // console.log(req.params);
+    }
+    else
+    {
+      const userId = (req.session.userId as string) ?? ''; 
+      const event = await EventModel.findOne({authorId: userId, start: req.body.start, end: req.body.end});
+      id = event._id;
+    }
     await EventCollection.deleteOne(id);
     res.status(200).json({
       message: 'Your event was deleted successfully.'
