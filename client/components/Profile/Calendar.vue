@@ -4,6 +4,7 @@
     <vue-cal
       ref="vuecal"
       style="height: 600px"
+      today-button
       :disable-views="['years']"
       editable-events
       :drag-to-create-event="false"
@@ -16,6 +17,9 @@
       "
       :on-event-create="createEvent"
       @event-delete="deleteEvent"
+      @event-title-change="changeTitle"
+      @event-drop="changeTime"
+      @event-duration-change="changeDuration"
       :dblclickToNavigate="false"
       :events="events"
     >
@@ -27,6 +31,13 @@
 import VueCal from "vue-cal";
 export default {
   components: { VueCal },
+  async created() {
+    const events = await(`/api/events?author=${this.$store.state.profileUsername}`);
+    for(event of events){
+      this.events.push({start: event.start, end: event.end, content: event.content});
+    }
+    //this.test = this.events;
+  },
   data: () => ({
     a: "",
     b: "",
@@ -65,6 +76,7 @@ export default {
       this.events = [];
     } */
     async createEvent(event, deleteEventFunction) {
+      this.test = event.content;
       const start = this.convertDate(event.start);
       const end = this.convertDate(event.end);
       let options = {
@@ -81,6 +93,7 @@ export default {
       return event;
     },
     async deleteEvent(event, e) {
+      //this.test = e;
       const start = this.convertDate(event.start);
       const end = this.convertDate(event.end);
       let options = {
@@ -92,6 +105,18 @@ export default {
         }),
       };
       await fetch(`/api/events`, options);
+    },
+    async changeDuration(event, e){
+      const originalEvent = event.originalEvent;
+      const newEvent = event.event;
+      this.test = originalEvent;
+      this.deleteEvent(originalEvent, "_");
+      this.createEvent(newEvent, "_");
+    },
+    async changeTitle(event, e){
+      const originalEvent = event.event;
+      this.deleteEvent(originalEvent, "_");
+      this.createEvent(originalEvent, "_");
     },
     convertDate(date) {
       const year = date.getFullYear();
