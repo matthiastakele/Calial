@@ -48,13 +48,15 @@ export default {
                 headers: { "Content-Type": "application/json" }
             };
             // let r = await fetch(`/api/circles/${username}/self`, options);
-            let r = await fetch(`/api/circles/${this.$props.username}/self`, options);
+            let r = await fetch(`/api/circles/${this.$props.groupName}/self`, options);
             let res = await r.json();    
             this.$store.commit('refreshGroups');
             this.$store.commit('refreshGroupEvents');
         },
         selectGroup(group){
-            this.$store.commit('selectGroup', group)
+            this.$store.commit('selectGroup', group);
+            this.$store.commit('refreshGroups');
+            this.$store.commit('refreshGroupEvents');
         },
 
     },
@@ -88,7 +90,10 @@ export default {
     padding: 3px;
 }
 .exitButton{
-    color: red;
+    color: black;
+    background-color: white;
+    border: none;
+    border-radius: 25px;
     width: 10%;
     vertical-align: top;
 }
