@@ -110,9 +110,8 @@ router.delete(
     //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
-
     let id = null;
-    if (req.params) {
+    if (req.params.eventId) {
       id = req.params.eventId;
     } else {
       const userId = (req.session.userId as string) ?? "";
