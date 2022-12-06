@@ -103,15 +103,16 @@ router.post(
  * @throws {404} - If the eventId is not valid
  */
 router.delete(
-  "/",
+  "/:eventId?",
   [
     userValidator.isUserLoggedIn,
     //eventValidator.isEventExists
     //eventValidator.isValidEventModifier
   ],
   async (req: Request, res: Response) => {
+
     let id = null;
-    if (req.params.eventId) {
+    if (req.params) {
       id = req.params.eventId;
     } else {
       const userId = (req.session.userId as string) ?? "";
