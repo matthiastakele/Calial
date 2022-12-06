@@ -33,6 +33,7 @@ router.get(
   '/userIds/:username?',
   [],
   async (req: Request, res: Response) => {
+    console.log("This gets called every time we upload an event");
     const user = await UserCollection.findOneByUsername(req.params.username);
     const userId = user._id;
     res.status(200).json({

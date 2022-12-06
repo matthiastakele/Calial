@@ -59,7 +59,7 @@ export default {
   name: 'ProfilePage',
   components: {FreetComponent, GetFreetsForm, CreateFreetForm, Calendar},
   mounted() {
-    this.$refs.personalCalendar.addEventsForUser([this.$store.state.profileUsername]);
+    this.$refs.personalCalendar.addEventsForUser([this.$store.state.username]); // used to be profileUsername, but profileUsername isn't updating fast enough or something
   },
   data() {
     return {

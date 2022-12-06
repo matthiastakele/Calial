@@ -21,7 +21,7 @@
         v-if="$store.state.username"
         to="/profile"
       >
-      <font-awesome-icon icon="fa-regular fa-user" size="xl"/>
+        <font-awesome-icon icon="fa-regular fa-user" size="xl"/>
       </router-link>
       <p v-else></p>
       <router-link class = "page_link"
