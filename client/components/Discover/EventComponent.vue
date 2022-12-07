@@ -60,6 +60,9 @@
         <div class = 'desc'>
             Description:
         </div>
+        <button class = "pretty_button"> 
+          📅 Add to Calendar
+        </button>
 
         <div
           v-if="$store.state.username === event.author"
@@ -90,9 +93,6 @@
           @click="stopEditing"
         >
           🚫 Discard changes
-        </button>
-        <button class = "pretty_button"> 
-          📅 Add to Calendar
         </button>
         <button class = "pretty_button"
           v-if="!editing"
