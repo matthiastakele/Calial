@@ -60,28 +60,28 @@
         <div class = 'desc'>
             Description:
         </div>
-        <button class = "pretty_button"> 
-          📅 Add to Calendar
-        </button>
-
-        <div
-          v-if="$store.state.username === event.author"
-          class="actions"
-        >
         <textarea
           v-if="editing"
           class="content"
           :value="draft"
           @input="draft = $event.target.value"
         />
-
-        
         <p
           v-else
           class="content"
         >
           📍 {{ event.content }}
         </p>
+        <button class = "pretty_button"
+        >
+        📅 Add Event to Calendar
+        </button>
+
+
+        <div
+          v-if="$store.state.username === event.author"
+          class="actions"
+        >
         <button class = "pretty_button"
           v-if="editing"
           @click="submitEdit"
