@@ -91,6 +91,9 @@
         >
           🚫 Discard changes
         </button>
+        <button class = "pretty_button"> 
+          📅 Add to Calendar
+        </button>
         <button class = "pretty_button"
           v-if="!editing"
           @click="startEditing"
