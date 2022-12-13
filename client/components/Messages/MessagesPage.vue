@@ -13,7 +13,7 @@
         <div
           v-if="createPromptButton===true">
           <button
-            class="createGroupButton"
+            class="createGroupButton pretty_button"
             @click="createPromptButton=false">
             Create a new Group
           </button>
@@ -30,7 +30,7 @@
         <div
           v-if="joinPromptButton===true">
           <button
-            class="joinGroupButton"
+            class="joinGroupButton pretty_button"
             @click="joinPromptButton=false">
             Join a new Group
           </button>
@@ -119,8 +119,13 @@
     </div>
 
     <div class="two">
-      <h3>Propose an Event</h3>
-      <CreateEventForm/>
+      <div v-if="suggestEventButton==true">
+        <button class = "createEventButton pretty_button" @click="suggestEventButton=false">Suggest an Event</button>
+      </div>
+      <div class="eventForm" v-else>
+        <CreateEventForm style="border: none;"/>
+        <button class = "cancelEvent" @click="suggestEventButton=true">Cancel</button>
+      </div>
       <div>
         <div class="suggestedEventTitle">
           <h3>Suggested Events</h3>
@@ -184,6 +189,7 @@ export default {
       currentGroup: "current",
       createPromptButton: true,
       joinPromptButton: true,
+      suggestEventButton: true
     };
   },
   created() {
@@ -269,6 +275,7 @@ export default {
 </script>
 
 <style scoped>
+@import "/components/global_css.css";
 .suggestedEventTitle{
   text-align: left;
   margin: 0;
@@ -345,6 +352,8 @@ export default {
   margin: 5px;
   gap: 10px;
   list-style: none;
+  height: 500px;
+  overflow:auto;
 }
 .createGroupForm{
   background-color: aqua;
@@ -360,15 +369,29 @@ export default {
   border-bottom: 2px solid #111; 
   border-right: 2px solid #111;
 }
+
+.cancelEvent{
+  color: red;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+}
 .createGroupButton{
-  background-color: blue;
+  background-color: #50C878;
   color: white;
   width: 100%;
   height: 50px;
   margin-bottom: 10px;
 }
 .joinGroupButton{
-  background-color: purple;
+  background-color: #5D3FD3;
+  color: white;
+  width: 100%;
+  height: 50px;
+}
+
+.createEventButton{
+  background-color: rgb(62, 126, 245);
   color: white;
   width: 100%;
   height: 50px;
@@ -378,4 +401,14 @@ export default {
   /* background-color: bisque; */
 }
 
+.eventForm {
+  border-radius: 25px;
+  border: 2px solid #111;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+}
 </style>
