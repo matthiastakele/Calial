@@ -1,8 +1,12 @@
 <template>
-    <button
+    <div
         class="proposedEventButton">
-        Event Name: {{groupName.title}} will be occuring from {{groupName.start}} to {{groupName.end}}. Description: {{groupName.content}}. This event was created by {{groupName.author}}.
-    </button>
+        <h3>{{groupName.title}} @{{groupName.author}}</h3>
+        <h4>From: {{groupName.start.split(" ")[1]}} {{groupName.start.split(" ")[0].split("-")[1]}}/{{groupName.start.split(" ")[0].split("-")[2]}}/{{groupName.start.split(" ")[0].split("-")[0]}}</h4>
+        <h4>To: {{groupName.end.split(" ")[1]}} {{groupName.end.split(" ")[0].split("-")[1]}}/{{groupName.end.split(" ")[0].split("-")[2]}}/{{groupName.end.split(" ")[0].split("-")[0]}}</h4>
+        <h4 v-if="groupName.content.length > 0">Location: {{groupName.content}}</h4>
+        <button class="pretty_button">Add to Calendar</button>
+    </div>
   </template>
 
 
@@ -45,6 +49,7 @@ export default {
 </script>
 
 <style scoped>
+@import "/components/global_css.css";
 .group {
     /* margin: 10px; */
     /* display: flex;
@@ -78,13 +83,15 @@ export default {
     /* background-color: white; */
 }
 .proposedEventButton{
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: auto;
     /* font-size:x-large; */
     background-color: white;
     /* border: 1px solid black;  */
     border-radius: 5px;
     padding: 3px;
+    font-size: 1rem;
+    text-align: center;
 }
 .exitButton{
     color: red;

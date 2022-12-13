@@ -34,7 +34,8 @@
   }
   
   .pretty_button:hover {
-    background-color: rgb(153, 153, 255);
+    color: #FAF9F6;
+    background-color: rgb(62, 126, 245);
     transform: translateY(-1px);
   }
   
