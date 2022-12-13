@@ -28,7 +28,8 @@ router.post(
     console.log('Creating a new circle');
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const circle = await CircleCollection.addOne(userId, req.body.circleName);
-
+    const user = await UserCollection.findOneByUserId(userId);
+    await CircleCollection.addUser(circle._id, user.username);
     res.status(201).json({
       message: 'Your circle was created successfully.',
       circle: circle

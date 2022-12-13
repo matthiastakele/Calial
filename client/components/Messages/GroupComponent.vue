@@ -14,7 +14,13 @@
         @click="selectGroup(groupName)">
         {{groupName}}
     </button>
+    <button class="selectedExitButton"
+        v-if="groupName === $store.state.currentGroup"
+        @click="exitGroup">
+        X
+    </button>
     <button class="exitButton"
+        v-else
         @click="exitGroup">
         X
     </button>
@@ -66,7 +72,7 @@ export default {
 <style scoped>
 .group {
     border-radius: 25px;
-    margin: 10px;
+    /* margin: 10px; */
     height: 80px;
     
     /* border: 1px solid #111; */
@@ -78,23 +84,41 @@ export default {
     height: 100%;
     font-size:x-large;
     padding: 3px;
-    /* background-color: white; */
+    border: none;
+    background-color: white;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 .selectedGroupButton{
     width: 90%;
     height: 100%;
     font-size:x-large;
-    background-color: darkgray;
-    border: 1px solid black; 
-    border-radius: 5px;
+    background-color: rgb(62, 126, 245);
     padding: 3px;
+    border: none;
+    color: white;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 .exitButton{
     color: black;
     background-color: white;
     border: none;
-    border-radius: 25px;
     width: 10%;
+    height: 100%;
     vertical-align: top;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.selectedExitButton{
+    color: black;
+    background-color: rgb(62, 126, 245);
+    border: none;
+    width: 10%;
+    height: 100%;
+    vertical-align: top;
+    color: white;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 </style>
