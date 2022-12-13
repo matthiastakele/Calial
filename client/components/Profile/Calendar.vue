@@ -3,7 +3,7 @@
     <p>{{ this.test }}</p>
     <vue-cal
       ref="vuecal"
-      style="height: 600px"
+      style="height: 700px"
       today-button
       :disable-views="['years']"
       :editable-events="{ title: true, drag: false, resize: true, delete: true, create: true }"
@@ -197,26 +197,26 @@ export default {
 
 <style>
 .vuecal__menu, .vuecal__cell-events-count {
-  background-color: rgb(153, 153, 255);
+  background-color: rgb(153, 153, 255) !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
 }
 .vuecal__title-bar {
-  background-color: #e4f5ef;
+  background-color: #caccff !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
 }
 .vuecal__cell-date { font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .vuecal__cell--today, .vuecal__cell--current {
-  background-color: rgba(240, 240, 255, 0.4);
+  background-color: rgba(240, 240, 255, 0.4) !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
 }
-.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { background-color: rgba(235, 255, 245, 0.4); }
-.vuecal__cell--selected:before { border-color: rgba(66, 185, 131, 0.5); }
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { background-color: rgba(235, 255, 245, 0.4) !important; }
+.vuecal__cell--selected:before { border-color: rgba(66, 185, 131, 0.5) !important; }
 /* Cells and buttons get highlighted when an event is dragged over it. */
-.vuecal__cell--highlighted:not(.vuecal__cell--has-splits), .vuecal__cell-split--highlighted { background-color: rgba(195, 255, 225, 0.5); }
-.vuecal__arrow.vuecal__arrow--highlighted, .vuecal__view-btn.vuecal__view-btn--highlighted { background-color: rgba(136, 236, 191, 0.25); }
+.vuecal__cell--highlighted:not(.vuecal__cell--has-splits), .vuecal__cell-split--highlighted { background-color: rgba(195, 255, 225, 0.5) !important; }
+.vuecal__arrow.vuecal__arrow--highlighted, .vuecal__view-btn.vuecal__view-btn--highlighted { background-color: rgba(136, 236, 191, 0.25) !important; }
 .vuecal__event {
   cursor: pointer;
   height: 100px;
@@ -225,6 +225,10 @@ export default {
   font-size: 15px;
   font-weight: bold;
   font-family: Arial;
+}
+.vuecal--view-with-time .vuecal__weekdays-headings, .vuecal--view-with-time .vuecal__all-day {
+    padding-right: 17px;
+    background-color: rgb(255, 255, 255) !important;
 }
 .vuecal__heading .weekday-label {
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
@@ -244,7 +248,7 @@ export default {
 }
 .vuecal__no-event {
   /* padding-top: 1em; */
-  color: rgb(148, 148, 148);
+  color: rgb(148, 148, 148) !important;
   justify-self: flex-start;
   margin-bottom: auto;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
@@ -273,14 +277,14 @@ export default {
     Arial, sans-serif;
 }
 .vuecal__event.leisure {
-  background-color: rgba(253, 156, 66, 0.9);
-  border: 1px solid rgb(233, 136, 46);
-  color: #fff;
+  background-color: rgba(253, 156, 66, 0.9) !important;
+  border: 1px solid rgb(233, 136, 46) !important;
+  color: #fff !important;
 }
 .vuecal__event.sport {
-  background-color: rgba(255, 102, 102, 0.9);
-  border: 1px solid rgb(235, 82, 82);
-  color: #fff;
+  background-color: rgba(255, 102, 102, 0.9) !important;
+  border: 1px solid rgb(235, 82, 82) !important;
+  color: #fff !important;
 }
 .vuecal__event-delete {
   position: absolute;
@@ -293,8 +297,8 @@ export default {
   justify-content: center;
   height: 1.4em;
   line-height: 1.4em;
-  background-color: #dd3333d9;
-  color: #fff;
+  background-color: #dd3333d9 !important;
+  color: #fff !important;
   cursor: pointer;
   transition: 0.3s;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,

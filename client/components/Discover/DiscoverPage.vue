@@ -13,7 +13,7 @@
     >
       <div id="events">
         <EventComponent 
-          v-for="event in $store.state.events"
+          v-for="event in $store.state.events.reverse()"
             :key="event.id"
             :event="event"
         />
@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
     this.$refs.vieweventsform.submit();
-  }
+  },
 };
 </script>
 
