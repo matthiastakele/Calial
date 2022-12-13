@@ -38,6 +38,7 @@
         <textarea
           v-if="editing"
           class="start"
+          style="color:black"
           :value="startdraft"
           @input="startdraft = $event.target.value"
         />
@@ -53,6 +54,7 @@
         </div> -->
         <textarea
           v-if="editing"
+          style="color:black"
           class="end"
           :value="enddraft"
           @input="enddraft = $event.target.value"
@@ -68,6 +70,7 @@
         </div> -->
         <textarea
           v-if="editing"
+          style="color:black"
           class="content"
           :value="draft"
           @input="draft = $event.target.value"
@@ -80,6 +83,7 @@
 
         <textarea
           v-if="editing"
+          style="color:black"
           class="title"
           :value="titledraft"
           @input="titledraft = $event.target.value"
@@ -363,4 +367,9 @@ span.profilePic{
   max-width: 50%;
   display: block;
 }
+
+.actions {
+  color: black;
+}
+
 </style>
