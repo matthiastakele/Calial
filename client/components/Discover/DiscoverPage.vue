@@ -11,8 +11,8 @@
     <div
         v-if="$store.state.events.length"
     >
-      <div>
-        <EventComponent
+      <div id="events">
+        <EventComponent 
           v-for="event in $store.state.events"
             :key="event.id"
             :event="event"
@@ -39,3 +39,23 @@ export default {
   }
 };
 </script>
+
+<style>
+body {
+  background-color: rgb(19, 19, 38);
+}
+
+#events {
+  column-count: 2;
+  /* column-gap: 9px; */
+  column-width: 0px;
+}
+
+h1 {
+  color:rgba(255, 255, 255, 0.838);
+}
+
+p {
+  color:rgba(255, 255, 255, 0.838);
+}
+</style>

@@ -91,7 +91,7 @@ app.all('*', (req: Request, res: Response) => {
 
 // Create server to listen to request at specified port
 const server = http.createServer(app);
-server.listen(process.env.PORT || app.get('port'), () => {
+server.listen(app.get('port'), () => {
   console.log(`Express server running at http://localhost:${app.get('port') as number}`);
 });
 
