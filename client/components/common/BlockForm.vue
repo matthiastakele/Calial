@@ -23,11 +23,10 @@
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
-        />
-        <input
-          v-else-if="field.id === 'start' || field.id === 'end'"
-          :placeholder="message2"
-          :type="field.id === 'password' ? 'password' : 'text'"
+        >
+        <input type="datetime-local"
+          v-else-if = "(field.id === 'start' || field.id === 'end')"
+          :placeholder = message2 
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
@@ -211,6 +210,15 @@ textarea {
   font-family: inherit;
   font-size: inherit;
 }
+
+#labels {
+  color: white;
+}
+
+#title {
+  color: white;
+}
+
 .grid-container {
   display: grid;
   margin-right: 75%;

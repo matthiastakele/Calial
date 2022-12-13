@@ -36,3 +36,9 @@ export default {
   }
 };
 </script>
+
+<style>
+h2 {
+  color:rgba(255, 255, 255, 0.838);
+}
+</style>

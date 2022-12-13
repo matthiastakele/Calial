@@ -15,7 +15,7 @@
             @{{ event.author }}
           </b>
         </div>
-        <textarea
+        <!-- <textarea
           v-if="editing"
           class="title"
           :value="titledraft"
@@ -26,13 +26,19 @@
           class="title"
         >
           {{ event.title }}
-        </p>
-        <div class = "desc">
+        </p> -->
+        <!-- <div class = "desc">
             From:
+        </div> -->
+        <div>
+          <img id = 'image' src="../../public/base_img.jpg" alt="Sample Event Image">
         </div>
+
+
         <textarea
           v-if="editing"
           class="start"
+          style="color:black"
           :value="startdraft"
           @input="startdraft = $event.target.value"
         />
@@ -40,38 +46,56 @@
           v-else
           class="start"
         >
-          📅 {{ event.start }}
+          {{ event.start.split(' ')[0] + " @ " + event.start.split(' ')[1] + '-' + event.end.split(' ')[1]}} 
+          <!-- might be good to add am/pm logic here -->
         </p>
-        <div class = 'desc'>
+        <!-- <div class = 'desc'>
             To:
-        </div>
+        </div> -->
         <textarea
           v-if="editing"
+          style="color:black"
           class="end"
           :value="enddraft"
           @input="enddraft = $event.target.value"
         />
-        <p
+        <!-- <p
           v-else
           class="end"
         >
           📅 {{ event.end }}
-        </p>
-        <div class = 'desc'>
-            Description:
-        </div>
+        </p> -->
+        <!-- <div class = 'desc'>
+            Location:
+        </div> -->
         <textarea
           v-if="editing"
+          style="color:black"
           class="content"
           :value="draft"
           @input="draft = $event.target.value"
-        />
-        <p
+        /><p
           v-else
           class="content"
         >
-          📍 {{ event.content }}
+          {{ event.content }}
         </p>
+
+        <textarea
+          v-if="editing"
+          style="color:black"
+          class="title"
+          :value="titledraft"
+          @input="titledraft = $event.target.value"
+        />
+        <p
+          v-else
+          class="title"
+        >
+          {{ event.title }}
+        </p>
+
+
         <button class = "pretty_button"
         >
         📅 Add Event to Calendar
@@ -256,11 +280,23 @@ export default {
 <style scoped>
 @import "/components/global_css.css";
 .event {
+
+  -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+               break-inside: avoid;
+
+    width: 100%;
     border-radius: 25px;
-    margin: 10px;
+    margin:auto;
+    margin-bottom: 10px;
     border: 2px solid #111;
-    padding: 20px;
+    padding: 40px;
     position: relative;
+    background-color: rgb(34, 37, 88);
+    color:rgba(255, 255, 255, 0.838);
+
+    /* display:flex; */
+    /* justify-content: space-around; */
 }
 .top{
   /* display: flex; */
@@ -282,9 +318,9 @@ export default {
 }
 .right {
   padding-bottom: 20px;
-  border-bottom-width:2px;
+  /* border-bottom-width:2px;
   border-bottom-color:rgb(0, 0, 0);
-  border-bottom-style: solid;
+  border-bottom-style: solid; */
 }
 #author {
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -305,4 +341,35 @@ span.profilePic{
   text-align: center;
   width: 60px;
 }
+
+.start{
+  font-size: 1em;
+  font-weight: bold;
+  color:rgba(255, 255, 255, 0.838);
+}
+
+.content{
+  font-size: 1em;
+  font-weight: bold;
+  color:rgba(255, 255, 255, 0.838);
+}
+
+.title{
+  font-size: 1.7em;
+  font-weight: bold;
+  color:rgba(255, 255, 255, 0.838);
+}
+
+#image {
+  object-fit: contain;
+  position:relative;
+  margin:auto;
+  max-width: 50%;
+  display: block;
+}
+
+.actions {
+  color: black;
+}
+
 </style>

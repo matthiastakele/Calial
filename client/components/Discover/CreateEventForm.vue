@@ -29,3 +29,15 @@ export default {
   }
 };
 </script>
+
+<style>
+form {
+  background-color: rgb(34, 37, 88);
+  margin:auto;
+  margin-bottom: 10px;
+  border: 2px solid #111;
+  padding: 40px;
+  position: relative;
+  width: 80%;
+}
+</style>

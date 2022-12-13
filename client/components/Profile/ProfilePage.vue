@@ -200,4 +200,12 @@ span.profilePic{
 .row {
   display: flex;
 }
+
+h3 {
+  color: white;
+}
+
+h4 {
+  color: white;
+}
 </style>
