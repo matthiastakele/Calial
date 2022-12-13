@@ -80,7 +80,7 @@
       <h3>Chat with {{$store.state.currentGroup}}</h3>
       <h5>Your Displayed Name: {{username}}</h5>
       <section v-if="joinedRoom.length === 0">
-          <button
+          <button class = "pretty_button"
             :key = $store.state.currentGroup
             @click="joinRoom($store.state.currentGroup)">
             Join the Live Chat for: {{$store.state.currentGroup}}
@@ -100,7 +100,7 @@
               name="message"
               v-model="text"
           />
-          <button
+          <button class = "pretty_button"
               @click="sendMessage"
           >
               Send chat
@@ -111,7 +111,7 @@
               </b>
               : {{ message.text }}
           </div>
-          <button @click="leaveRoom">
+          <button class = "pretty_button" @click="leaveRoom">
               Leave this room
           </button>
       </section>

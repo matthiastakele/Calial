@@ -13,7 +13,7 @@
     font-weight: 600;
     justify-content: center;
     line-height: 1.25;
-    margin: 2px;
+    margin: 5px;
     min-height: 3rem;
     padding: calc(.625rem - 1px) calc(1.25rem - 1px);
     position: relative;
@@ -47,7 +47,7 @@
     transform: translateY(0);
   }
 
-h1, h2, h3, h4, p, label{
+h1, h2, h3, h4, h5, p, label{
   color: #353535;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
