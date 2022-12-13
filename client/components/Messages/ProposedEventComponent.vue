@@ -5,6 +5,7 @@
         <h4>From: {{groupName.start.split(" ")[1]}} {{groupName.start.split(" ")[0].split("-")[1]}}/{{groupName.start.split(" ")[0].split("-")[2]}}/{{groupName.start.split(" ")[0].split("-")[0]}}</h4>
         <h4>To: {{groupName.end.split(" ")[1]}} {{groupName.end.split(" ")[0].split("-")[1]}}/{{groupName.end.split(" ")[0].split("-")[2]}}/{{groupName.end.split(" ")[0].split("-")[0]}}</h4>
         <h4 v-if="groupName.content.length > 0">Location: {{groupName.content}}</h4>
+        <button class="pretty_button">Add to Calendar</button>
     </div>
   </template>
 
@@ -48,6 +49,7 @@ export default {
 </script>
 
 <style scoped>
+@import "/components/global_css.css";
 .group {
     /* margin: 10px; */
     /* display: flex;
