@@ -10,7 +10,7 @@
       <div
         class="groupOptions">
 
-        <div
+        <div style="margin-bottom: 20px;"
           v-if="createPromptButton===true">
           <button
             class="createGroupButton pretty_button"
@@ -18,7 +18,7 @@
             Create a new Group
           </button>
         </div>
-        <div
+        <div style="margin-bottom: 20px;"
           v-else>
           <CreateGroupForm/>
           <button
@@ -27,7 +27,7 @@
           </button>
         </div>
 
-        <div
+        <div 
           v-if="joinPromptButton===true">
           <button
             class="joinGroupButton pretty_button"
@@ -47,7 +47,7 @@
 
 
       <div 
-        class="leftMargin">
+        class="leftMargin groupOptions" style="padding: 0.5rem;">
         <h3>Your Groups</h3>
       </div>
       <!-- {{$store.state.groups}} -->
@@ -94,7 +94,7 @@
       </section> -->
 
       <section v-else>
-          <h2>{{ joinedRoom }}</h2>
+          <h2 style="color: #353535;">{{ joinedRoom }}</h2>
           <input
               type="text"
               name="message"
@@ -291,12 +291,12 @@ export default {
   border: 1px solid  black;
 }
 .groupOptions{
-  /* border-radius: 25px;
-  border: 1px solid #111;  */
+  /* border-radius: 25px; */
+  border: 1px solid #111; 
   padding: 1rem;
   /* display: flex; */
   /* justify-content: space-evenly; */
-  margin-bottom: 14px;
+  /* margin-bottom: 14px; */
   /* position: relative; */
   /* margin-top: 25px; */
   background-color: rgb(226, 224, 224);
@@ -362,12 +362,14 @@ export default {
 .exitGroupOptions{
   height: 30px;
   width: 100%;
-  background-color: white;
+  background-color: transparent;
   color: red;
-  border-top: none;
+  border: none;
+  font-size: 15px;
+  /* border-top: none;
   border-left: 2px solid #111; 
   border-bottom: 2px solid #111; 
-  border-right: 2px solid #111;
+  border-right: 2px solid #111; */
 }
 
 .cancelEvent{

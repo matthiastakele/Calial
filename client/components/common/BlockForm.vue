@@ -212,6 +212,10 @@ textarea {
   font-size: inherit;
 }
 
+label, h3{
+  color: #FAF9F6;
+}
+
 #labels {
   color: white;
 }
