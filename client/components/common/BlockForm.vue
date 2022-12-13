@@ -27,10 +27,9 @@
           :value="field.value"
           @input="field.value = $event.target.value"
         >
-        <input
+        <input type="datetime-local"
           v-else-if = "(field.id === 'start' || field.id === 'end')"
           :placeholder = message2 
-          :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"

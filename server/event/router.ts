@@ -76,11 +76,23 @@ router.post(
       }
     }
     if (!taken) {
+
+      let start = req.body.start;
+      let end = req.body.end
+
+      if (req.body.start.includes("T") && req.body.end.includes("T"))
+      {
+        start = start.split("T")[0] + " " + start.split("T")[1];
+        end = end.split("T")[0] + " " + end.split("T")[1];
+        console.log("start: " + start);
+        console.log("end: " + end);
+      }
+
       const event = await EventCollection.addOne(
         userId,
         req.body.title,
-        req.body.start,
-        req.body.end,
+        start,
+        end,
         req.body.content
       );
 
