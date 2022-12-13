@@ -3,10 +3,10 @@
 
 <template>
   <form @submit.prevent="submit">
-    <h3>{{ title }}</h3>
+    <h3 style="color:white">{{ title }}</h3>
     <article v-if="fields.length">
       <div v-for="field in fields" :key="field.id">
-        <label :for="field.id">{{ field.label }}:</label>
+        <label style="color:white" :for="field.id">{{ field.label }}:</label>
         <textarea
           class="content-text"
           :placeholder="message"
