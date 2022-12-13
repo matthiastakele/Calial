@@ -3,17 +3,10 @@
 
 <template>
   <form @submit.prevent="submit">
-<<<<<<< HEAD
-    <h3 style="color:white">{{ title }}</h3>
-    <article v-if="fields.length">
-      <div v-for="field in fields" :key="field.id">
-        <label style="color:white" :for="field.id">{{ field.label }}:</label>
-=======
     <h3>{{ title }}</h3>
     <article v-if="fields.length">
       <div v-for="field in fields" :key="field.id">
         <label :for="field.id">{{ field.label }}:</label>
->>>>>>> 660d1c8a (resolving merge conflict)
         <textarea
           class="content-text"
           :placeholder="message"
@@ -30,30 +23,15 @@
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
-<<<<<<< HEAD
-        >
-        <input type="datetime-local"
-          v-else-if = "(field.id === 'start' || field.id === 'end')"
-          :placeholder = message2 
-          :name="field.id"
-          :value="field.value"
-          @input="field.value = $event.target.value"
-        />
-        <input
-          v-else
-=======
         />
         <input
           v-else-if="field.id === 'start' || field.id === 'end'"
           :placeholder="message2"
->>>>>>> 660d1c8a (resolving merge conflict)
           :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
         />
-<<<<<<< HEAD
-=======
         <input
           v-else
           :type="field.id === 'password' ? 'password' : 'text'"
@@ -61,7 +39,6 @@
           :value="field.value"
           @input="field.value = $event.target.value"
         />
->>>>>>> 660d1c8a (resolving merge conflict)
       </div>
     </article>
     <article v-else>
