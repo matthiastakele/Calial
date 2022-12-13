@@ -3,48 +3,52 @@
 
 <template>
   <form @submit.prevent="submit">
-    <h3>{{ title }}</h3>
-    <article v-if="fields.length">
-      <div v-for="field in fields" :key="field.id">
-        <label :for="field.id">{{ field.label }}:</label>
-        <textarea
-          class="content-text"
-          :placeholder="message"
+    <h3 id="title">{{ title }}</h3>
+    <article
+      v-if="fields.length"
+    >
+      <div
+        v-for="field in fields"
+        :key="field.id"
+      >
+        <label id="labels" :for="field.id">{{ field.label }}:</label>
+        <textarea class="content-text" :placeholder= message
           v-if="field.id === 'content'"
-          font-family="Arial"
+          font-family = 'Arial'
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
         />
         <input
-          v-else-if="field.id === 'title'"
-          :placeholder="message1"
+          v-else-if = "field.id === 'title'"
+          :placeholder = message1 
           :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
-        />
+        >
+        <input type="datetime-local"
+          v-else-if = "(field.id === 'start' || field.id === 'end')"
+          :placeholder = message2 
+          :name="field.id"
+          :value="field.value"
+          @input="field.value = $event.target.value"
+        >
         <input
-          v-else-if="field.id === 'start' || field.id === 'end'"
-          :placeholder="message2"
+          v-else 
           :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
-        />
-        <input
-          v-else
-          :type="field.id === 'password' ? 'password' : 'text'"
-          :name="field.id"
-          :value="field.value"
-          @input="field.value = $event.target.value"
-        />
+        >
       </div>
     </article>
     <article v-else>
       <p>{{ content }}</p>
     </article>
-    <button class="pretty_button" type="submit">
+    <button class = "pretty_button"
+      type="submit"
+    >
       {{ title }}
     </button>
     <section class="alerts">
@@ -61,20 +65,16 @@
 
 <script>
 export default {
-  name: "BlockForm",
+  name: 'BlockForm',
   components: {},
   data() {
     /**
      * Options for submitting this form.
      */
-    let messages = [
-      "Name of the event",
-      "Enter in YYYY-MM-DD HH:MM format",
-      "Location (or other additional information you might want to include) goes here",
-    ];
+    let messages = ["Name of the event", "Enter in YYYY-MM-DD HH:MM format", "Location (or other additional information you might want to include) goes here"];
     return {
-      url: "", // Url to submit form to
-      method: "GET", // Form request method
+      url: '', // Url to submit form to
+      method: 'GET', // Form request method
       hasBody: false, // Whether or not form request has a body
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
@@ -84,29 +84,27 @@ export default {
       callback: null, // Function to run after successful form submission
       message1: messages[0],
       message2: messages[1],
-      message: messages[2],
+      message: messages[2]
     };
   },
   methods: {
     async submit() {
       /**
-       * Submits a form with the specified options from data().
-       */
+        * Submits a form with the specified options from data().
+        */
       const options = {
         method: this.method,
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin", // Sends express-session credentials with request
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'same-origin' // Sends express-session credentials with request
       };
       if (this.hasBody) {
-        options.body = JSON.stringify(
-          Object.fromEntries(
-            this.fields.map((field) => {
-              const { id, value } = field;
-              field.value = "";
-              return [id, value];
-            })
-          )
-        );
+        options.body = JSON.stringify(Object.fromEntries(
+          this.fields.map(field => {
+            const {id, value} = field;
+            field.value = '';
+            return [id, value];
+          })
+        ));
       }
 
       try {
@@ -120,13 +118,9 @@ export default {
 
         if (this.setUsername) {
           const text = await r.text();
-          const res = text ? JSON.parse(text) : { user: null };
-          this.$store.commit(
-            "setUsername",
-            res.user ? res.user.username : null
-          );
-          this.$store.commit("setUserId", res.user ? res.user._id : null);
-          this.$store.commit("updateNavBarChosen", "discover");
+          const res = text ? JSON.parse(text) : {user: null};
+          this.$store.commit('setUsername', res.user ? res.user.username : null);
+          this.$store.commit('setUserId', res.user ? res.user._id : null);
         }
 
         if (this.refreshFreets) {
@@ -135,10 +129,10 @@ export default {
           let options2 = {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ freetId: freetId }),
+            body: JSON.stringify({freetId: freetId}),
           };
-          this.$store.commit("refreshFreets");
-          this.$store.commit("refreshProfileFreets");
+          this.$store.commit('refreshFreets');
+          this.$store.commit('refreshProfileFreets');
         }
 
         if (this.refreshEvents) {
@@ -147,17 +141,17 @@ export default {
           let options2 = {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ eventId: eventId }),
+            body: JSON.stringify({eventId: eventId}),
           };
-          this.$store.commit("refreshEvents");
+          this.$store.commit('refreshEvents');
         }
-
+        
         if (this.refreshGroups) {
-          this.$store.commit("refreshGroups");
+          this.$store.commit('refreshGroups');
         }
 
-        if (this.refreshGroupEvents) {
-          this.$store.commit("refreshGroupEvents");
+        if (this.refreshGroupEvents){
+          this.$store.commit('refreshGroupEvents');
         }
 
         // if(this.signOut){
@@ -168,11 +162,11 @@ export default {
           this.callback();
         }
       } catch (e) {
-        this.$set(this.alerts, e, "error");
+        this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -180,7 +174,7 @@ export default {
 @import "/components/global_css.css";
 form {
   border-radius: 25px;
-  border: 2px solid #111;
+  border: 2px solid #111; 
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -208,8 +202,8 @@ form h3 {
 }
 
 textarea {
-  font-family: inherit;
-  font-size: inherit;
+   font-family: inherit;
+   font-size: inherit;
 }
 
 #labels {
@@ -233,19 +227,8 @@ textarea {
   text-align: center;
 }
 .content-text {
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 15px;
   font-weight: 600;
-}
-.exitGroupOptions{
-  height: 30px;
-  width: 100%;
-  background-color: white;
-  color: red;
-  border-top: none;
-  border-left: 2px solid #111; 
-  border-bottom: 2px solid #111; 
-  border-right: 2px solid #111;
 }
 </style>
