@@ -1,11 +1,11 @@
 <!-- Form for changing username (block style) -->
 
 <script>
-import BlockForm from '@/components/common/BlockForm.vue';
+import NewBlockForm from '@/components/common/NewBlockForm.vue';
 
 export default {
   name: 'JoinGroupForm',
-  mixins: [BlockForm],
+  mixins: [NewBlockForm],
   data() {
     return {
       url: '/api/circles/self',

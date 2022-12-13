@@ -3,15 +3,6 @@
         class="proposedEventButton">
         Event Name: {{groupName.title}} will be occuring from {{groupName.start}} to {{groupName.end}}. Description: {{groupName.content}}. This event was created by {{groupName.author}}.
     </button>
-    <!-- <div
-        class="child">
-        hello
-        <button
-            class="proposedEventButton"
-            @click="selectGroup(groupName)">
-            {{groupName}}
-        </button>
-    </div> -->
   </template>
 
 
@@ -90,8 +81,8 @@ export default {
     width: 200px;
     height: 200px;
     /* font-size:x-large; */
-    background-color: darkgray;
-    border: 1px solid black; 
+    background-color: white;
+    /* border: 1px solid black;  */
     border-radius: 5px;
     padding: 3px;
 }

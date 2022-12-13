@@ -3,20 +3,55 @@
 
 <template>
   <main>
-    <section>
-      <div class="groupOptions">
-        <div><CreateGroupForm /></div>
-        <div><JoinGroupForm /></div>
-      </div>
-      
-    </section>
-    <div class = "compiledCalendar">
+    <!-- <div class = "compiledCalendar">
       <Calendar ref="personalCalendar" />
-    </div>
+    </div> -->
     <div class="groupsPane">
-      <h3>Your Groups</h3>
+      <div
+        class="groupOptions">
+
+        <div
+          v-if="createPromptButton===true">
+          <button
+            class="createGroupButton pretty_button"
+            @click="createPromptButton=false">
+            Create a new Group
+          </button>
+        </div>
+        <div
+          v-else>
+          <CreateGroupForm/>
+          <button
+            @click="createPromptButton=true"
+            class="exitGroupOptions">Cancel
+          </button>
+        </div>
+
+        <div
+          v-if="joinPromptButton===true">
+          <button
+            class="joinGroupButton pretty_button"
+            @click="joinPromptButton=false">
+            Join a new Group
+          </button>
+        </div>
+        <div
+          v-else>
+          <JoinGroupForm/>
+          <button
+            @click="joinPromptButton=true"
+            class="exitGroupOptions">Cancel
+          </button>
+        </div>
+      </div>
+
+
+      <div 
+        class="leftMargin">
+        <h3>Your Groups</h3>
+      </div>
       <!-- {{$store.state.groups}} -->
-      <div class="reverseorder">
+      <div>
         <GroupComponent
           v-for="group in $store.state.groups"
           :groupName=group
@@ -40,31 +75,11 @@
       </article> -->
 
     </div>
-    <div class="two">
-      <h3>Propose an Event</h3>
-      <CreateEventForm/>
-      <h3>Suggested Events from other Members of the Group</h3>
-      <div class="proposedEvents">
-        <ProposedEventComponent
-          v-for="group in $store.state.groupEvents"
-          :groupName=group
-        />
-        <!-- <button>
-          {{$store.state.events}}
-        </button>
-        <button>
-          {{$store.state.groupEvents}}
-        </button> -->
-      </div>
-    </div>
-    
+
     <div class="three"> 
-      <h3>Live Chat</h3>
+      <h3>Chat with {{$store.state.currentGroup}}</h3>
       <h5>Your Displayed Name: {{username}}</h5>
       <section v-if="joinedRoom.length === 0">
-          <!-- <div v-for="room in $store.state.groups" :key="room" @click="joinRoom(room)">
-              {{ room }}
-          </div> -->
           <button
             :key = $store.state.currentGroup
             @click="joinRoom($store.state.currentGroup)">
@@ -102,6 +117,31 @@
       </section>
 
     </div>
+
+    <div class="two">
+      <div v-if="suggestEventButton==true">
+        <button class = "createEventButton pretty_button" @click="suggestEventButton=false">Suggest an Event</button>
+      </div>
+      <div class="eventForm" v-else>
+        <CreateEventForm style="border: none;"/>
+        <button class = "cancelEvent" @click="suggestEventButton=true">Cancel</button>
+      </div>
+      <div>
+        <div class="suggestedEventTitle">
+          <h3>Suggested Events</h3>
+          <h5>from others in {{$store.state.currentGroup}}</h5>
+        </div>
+        <div class="proposedEvents">
+          <ProposedEventComponent
+            v-for="group in $store.state.groupEvents"
+            :groupName=group
+          />
+        </div>
+      </div>
+      
+    </div>
+    
+    
   </main>
 </template>
 
@@ -132,7 +172,7 @@ export default {
     JoinGroupForm,
     GroupComponent,
     CreateEventForm,
-    ProposedEventComponent
+    ProposedEventComponent,
   },
   mounted() {
     this.$store.commit('refreshGroups');
@@ -147,6 +187,9 @@ export default {
       rooms: ["Room1", "Room2"],
       joinedRoom: "",
       currentGroup: "current",
+      createPromptButton: true,
+      joinPromptButton: true,
+      suggestEventButton: true
     };
   },
   created() {
@@ -232,8 +275,15 @@ export default {
 </script>
 
 <style scoped>
-.proposedEvents{
-
+@import "/components/global_css.css";
+.suggestedEventTitle{
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+.testDiv{
+  background-color: lightgray;
 }
 .groupButtons{
   background-color: #ffffff;
@@ -244,56 +294,54 @@ export default {
   /* border-radius: 25px;
   border: 1px solid #111;  */
   padding: 1rem;
-  display: flex;
-  justify-content: space-evenly;
+  /* display: flex; */
+  /* justify-content: space-evenly; */
   margin-bottom: 14px;
-  position: relative;
-  margin-top: 25px;
+  /* position: relative; */
+  /* margin-top: 25px; */
+  background-color: rgb(226, 224, 224);
 }
 .groupsPane
 {  
   /* padding-top: 15px; */
-  text-align: center;
-  border: 3px solid #111;
+  /* text-align: center; */
+  /* border: 3px solid #111; */
+  border: 1px solid #111;
   float: left;  
-  width:15%;
-  height:100%
+  width:20%;
+  height:100%;
+  margin-top: 30px;
 }
 .two
 {
-    /* background-color:orange; */
-    float: left;
-    width:50%;
-  /* display: flex; */
-  /* background-color: aqua; */
-  
-  /* flex-flow: row wrap; */
-  
-  /* justify-content: space-around; */
-  border: 3px solid black;
+  /* background-color:orange; */
+  float: left;
+  width:30%;
+  background-color: lightgrey;
+  border: 1px solid black;
   text-align: center;
   padding: 0;
   margin: 0;
   list-style: none;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 5px;
+  /* margin-left: 5px;
+  margin-right: 5px; */
+  padding: 10px;
+  margin-top: 30px;
 }
 .three
 {
-    /* background-color: hotpink; */
-    text-align: center;
-    border: 3px solid #111;
+    background-color: lightgrey;
+    border: 1px solid #111;
     float: left;
-    width:30%;
+    width:50%;
     padding: 5px;
+    min-height: 100%;
+    height: 100%;
+    margin-top: 30px;
 }
 .proposedEvents {
-  /* background-color:orange; */
-  /* float: left; */
-  /* width:40%; */
+  text-align: left;
   display: flex;
-  /* background-color: aqua; */
   
   flex-flow: row wrap;
   
@@ -304,5 +352,63 @@ export default {
   margin: 5px;
   gap: 10px;
   list-style: none;
+  height: 500px;
+  overflow:auto;
+}
+.createGroupForm{
+  background-color: aqua;
+}
+
+.exitGroupOptions{
+  height: 30px;
+  width: 100%;
+  background-color: white;
+  color: red;
+  border-top: none;
+  border-left: 2px solid #111; 
+  border-bottom: 2px solid #111; 
+  border-right: 2px solid #111;
+}
+
+.cancelEvent{
+  color: red;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+}
+.createGroupButton{
+  background-color: #50C878;
+  color: white;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.joinGroupButton{
+  background-color: #5D3FD3;
+  color: white;
+  width: 100%;
+  height: 50px;
+}
+
+.createEventButton{
+  background-color: rgb(62, 126, 245);
+  color: white;
+  width: 100%;
+  height: 50px;
+}
+.leftMargin{
+  padding-left: 20px;
+  /* background-color: bisque; */
+}
+
+.eventForm {
+  border-radius: 25px;
+  border: 2px solid #111;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
 }
 </style>
