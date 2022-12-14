@@ -1,7 +1,7 @@
 <template>
   <main>
     <p>{{ this.test }}</p>
-    <vue-cal
+    <vue-cal class = "below"
       ref="vuecal"
       style="height: 700px"
       today-button
@@ -197,26 +197,30 @@ export default {
 
 <style>
 .vuecal__menu, .vuecal__cell-events-count {
-  background-color: rgb(153, 153, 255) !important;
+  background-color: #6495ED !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
+  border: 1px solid #111; 
 }
 .vuecal__title-bar {
-  background-color: #caccff !important;
+  background-color: #6495ED  !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
+  border: 1px solid #111; 
 }
+.vuecal__cell{}
 .vuecal__cell-date { font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .vuecal__cell--today, .vuecal__cell--current {
-  background-color: rgba(240, 240, 255, 0.4) !important;
+  background-color: #d1dffa80 !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
 }
-.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { background-color: rgba(235, 255, 245, 0.4) !important; }
-.vuecal__cell--selected:before { border-color: rgba(66, 185, 131, 0.5) !important; }
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { background-color: #a4c0f44D !important; }
+.vuecal__cell--selected:before {  }
 /* Cells and buttons get highlighted when an event is dragged over it. */
 .vuecal__cell--highlighted:not(.vuecal__cell--has-splits), .vuecal__cell-split--highlighted { background-color: rgba(195, 255, 225, 0.5) !important; }
 .vuecal__arrow.vuecal__arrow--highlighted, .vuecal__view-btn.vuecal__view-btn--highlighted { background-color: rgba(136, 236, 191, 0.25) !important; }
+.vuecal__time-cell-line {border-color: #42b983;}
 .vuecal__event {
   cursor: pointer;
   height: 100px;
@@ -227,10 +231,12 @@ export default {
   font-family: Arial;
 }
 .vuecal--view-with-time .vuecal__weekdays-headings, .vuecal--view-with-time .vuecal__all-day {
+    border: 1px solid #111; 
     padding-right: 17px;
-    background-color: rgb(255, 255, 255) !important;
+    background-color: #FAF9F6 !important;
 }
 .vuecal__heading .weekday-label {
+  background-color: #FAF9F6 !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
   display: flex;
@@ -240,6 +246,7 @@ export default {
   align-items: center;
 }
 .vuecal__time-column .vuecal__time-cell {
+  background-color: #FAF9F6 !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
   color: rgb(90, 90, 90) !important;
@@ -277,8 +284,8 @@ export default {
     Arial, sans-serif;
 }
 .vuecal__event.leisure {
-  background-color: rgba(253, 156, 66, 0.9) !important;
-  border: 1px solid rgb(233, 136, 46) !important;
+  background-color: rgb(62, 126, 245) !important;
+  border: 1px solid rgb(62, 126, 245) !important;
   color: #fff !important;
 }
 .vuecal__event.sport {

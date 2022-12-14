@@ -2,7 +2,7 @@
   <main>
     <vue-cal
     ref="vuecal"
-      style="height: 600px"
+      style="height: 600px; width: 400px; margin-top:20px;"
       today-button
       :time-step="30"
       :disable-views="['years', 'year', 'month', 'week']"
@@ -179,10 +179,10 @@ export default {
 </script>
 
 <style>
-.vuecal__cell-split.dad {background-color: rgba(221, 238, 255, 0.5);}
-.vuecal__cell-split.mom {background-color: rgba(255, 232, 251, 0.5);}
-.vuecal__cell-split.kid1 {background-color: rgba(221, 255, 239, 0.5);}
-.vuecal__cell-split.kid2 {background-color: rgba(255, 250, 196, 0.5);}
-.vuecal__cell-split.kid3 {background-color: rgba(255, 206, 178, 0.5);}
+.vuecal__cell-split.dad {background-color: rgba(221, 238, 255, 0.7);}
+.vuecal__cell-split.mom {background-color: rgba(255, 232, 251, 0.7);}
+.vuecal__cell-split.kid1 {background-color: rgba(221, 255, 239, 0.7);}
+.vuecal__cell-split.kid2 {background-color: rgba(255, 250, 196, 0.7);}
+.vuecal__cell-split.kid3 {background-color: rgba(255, 206, 178, 0.7);}
 .vuecal__cell-split .split-label {color: rgba(0, 0, 0, 0.1);font-size: 26px;}
 </style>
