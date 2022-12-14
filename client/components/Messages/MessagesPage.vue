@@ -77,8 +77,8 @@
     </div>
 
     <div class="three"> 
-      <h3>Chat with {{$store.state.currentGroup}}, {{this.rooms}}, </h3>
-      <h5>Your Displayed Name: {{username}}</h5>
+      <h3>{{$store.state.currentGroup}} Chat</h3>
+      <!-- <h5>Your Displayed Name: {{username}}</h5> -->
       <section v-if="joinedRoom.length === 0">
           <button class = "pretty_button"
             :key = $store.state.currentGroup
@@ -88,28 +88,28 @@
       </section>
 
       <section v-else>
-          <h2 style="color: #FAF9F6;">{{ joinedRoom }}</h2>
+          <!-- <h2 style="color: #FAF9F6;">{{ joinedRoom }}</h2> -->
+          <div style="margin-bottom: 15px; color: #FAF9F6;" v-for="message in messages" :key="message.id">
+              <b style="margin-left: 5px;">
+              {{ message.username }}
+              </b>
+              : {{ message.text }}
+          </div>
           <input
               type="text"
               name="message"
               v-model="text"
-          />
+          /> 
           <button class = "pretty_button"
               @click="sendMessage"
           >
               Send chat
           </button>
-          <div v-for="message in messages" :key="message.id">
-              <b>
-              {{ message.username }}
-              </b>
-              : {{ message.text }}
-          </div>
           <button class = "pretty_button" @click="leaveRoom">
               Leave this room
           </button>
       </section>
-      <div v-if="showCompiledCalendarButton==false">
+      <div style="margin-left: -62.5px;" v-if="showCompiledCalendarButton==false">
         <CompiledCalendar/>
       </div>
     </div>
@@ -282,7 +282,7 @@ export default {
 
 <style scoped>
 @import "/components/global_css.css";
-h3, h4, h5{
+b, h3, h4, h5{
   color: #FAF9F6;
 }
 .suggestedEventTitle{
@@ -361,7 +361,7 @@ h3, h4, h5{
   margin: 5px;
   gap: 10px;
   list-style: none;
-  height: 500px;
+  height: 635px;
   overflow:auto;
 }
 .createGroupForm{
