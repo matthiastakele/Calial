@@ -94,7 +94,7 @@
       </section> -->
 
       <section v-else>
-          <h2 style="color: #353535;">{{ joinedRoom }}</h2>
+          <h2 style="color: #FAF9F6;">{{ joinedRoom }}</h2>
           <input
               type="text"
               name="message"
@@ -276,6 +276,9 @@ export default {
 
 <style scoped>
 @import "/components/global_css.css";
+h3, h4, h5{
+  color: #FAF9F6;
+}
 .suggestedEventTitle{
   text-align: left;
   margin: 0;
@@ -299,7 +302,7 @@ export default {
   /* margin-bottom: 14px; */
   /* position: relative; */
   /* margin-top: 25px; */
-  background-color: rgb(226, 224, 224);
+  background-color: rgb(34, 37, 88);
 }
 .groupsPane
 {  
@@ -317,7 +320,7 @@ export default {
   /* background-color:orange; */
   float: left;
   width:30%;
-  background-color: lightgrey;
+  background-color: rgb(34, 37, 88);
   border: 1px solid black;
   text-align: center;
   padding: 0;
@@ -330,7 +333,7 @@ export default {
 }
 .three
 {
-    background-color: lightgrey;
+    background-color: rgb(34, 37, 88);
     border: 1px solid #111;
     float: left;
     width:50%;
