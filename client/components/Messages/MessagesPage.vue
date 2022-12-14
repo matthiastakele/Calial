@@ -186,7 +186,7 @@ export default {
       username: this.$store.state.username,
       text: "",
       messages: [],
-      rooms: ["test", "Room2", "Room3"],
+      rooms: ["Room1", "Room2"],
       joinedRoom: "",
       currentGroup: "current",
       createPromptButton: true,
@@ -236,7 +236,7 @@ export default {
             text: this.text,
             username: this.username,
             userId: this.socketInstance.id,
-            roomName: "Room3",
+            roomName: "this.joinedRoom",
         };
         this.messages = this.messages.concat(message); // show message in my client
         this.socketInstance.emit('message', message); // send message to others
@@ -263,7 +263,7 @@ export default {
     },
     joinRoom(room) {
         this.socketInstance.emit("join-room", {
-            roomName: "Room3",
+            roomName: room,
         });
         this.joinedRoom = room;
     },
