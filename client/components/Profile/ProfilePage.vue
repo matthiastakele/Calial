@@ -4,7 +4,7 @@
   <main>
     <span class="profilePic">{{this.username.charAt(0).toUpperCase()}}</span>
     <h3 style = "margin-left: 2%;">@{{this.username}}</h3>
-    <h4 style = "margin-left: 2%;">{{this.followers}} Followers  &nbsp; {{this.following}} Following</h4>
+    <h4 style = "margin-left: 2%;">10 Followers  &nbsp; 15 Following</h4>
       <!-- <div class="options">
         <button class = "pretty_button options_item" @click="chooseFreets" :style= "{'background-color': chosen == 'freets' ? 'rgb(153, 153, 255)' : '#f8f8f8'}">
           Freets

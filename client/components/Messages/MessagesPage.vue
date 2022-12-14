@@ -366,7 +366,7 @@ h3, h4, h5{
   height: 30px;
   width: 100%;
   background-color: transparent;
-  color: red;
+  color: #EE4B2B;
   border: none;
   font-size: 15px;
   /* border-top: none;
@@ -376,7 +376,7 @@ h3, h4, h5{
 }
 
 .cancelEvent{
-  color: red;
+  color: #EE4B2B;
   font-size: 15px;
   background-color: transparent;
   border: none;
