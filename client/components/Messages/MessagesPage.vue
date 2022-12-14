@@ -263,7 +263,7 @@ export default {
     },
     joinRoom(room) {
         this.socketInstance.emit("join-room", {
-            roomName: room,
+            roomName: "Room3",
         });
         this.joinedRoom = room;
     },
