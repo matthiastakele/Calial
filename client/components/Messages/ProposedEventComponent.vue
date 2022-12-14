@@ -1,7 +1,13 @@
 <template>
     <button
+        v-if="groupName.content.length"
         class="proposedEventButton">
-        Event Name: {{groupName.title}} will be occuring from {{groupName.start}} to {{groupName.end}}. Description: {{groupName.content}}. This event was created by {{groupName.author}}.
+        <b>{{groupName.title}}</b> @{{groupName.author}}<br> From: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.start}} </mark><br>To: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.end}} </mark><br> Description: {{groupName.content}}
+    </button>
+    <button
+        v-else
+        class="proposedEventButton">
+        <b>{{groupName.title}}</b> @{{groupName.author}}<br> From: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.start}} </mark><br>To: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.end}} </mark><br> Description: N/A
     </button>
   </template>
 
@@ -84,7 +90,8 @@ export default {
     background-color: white;
     /* border: 1px solid black;  */
     border-radius: 5px;
-    padding: 3px;
+    padding: 20px;
+    text-align: left;
 }
 .exitButton{
     color: red;
