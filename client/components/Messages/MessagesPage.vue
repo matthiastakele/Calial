@@ -6,7 +6,6 @@
     <!-- <div class = "compiledCalendar">
       <Calendar ref="personalCalendar" />
     </div> -->
-    <p>{{this.$store.state.currentGroupMembers}}</p>
     <div class="groupsPane">
       <div
         class="groupOptions">
