@@ -34,14 +34,14 @@ router.get(
       next();
       return;
     }
-    console.log("hi");
+    console.log("Getting all Events");
     const allEvents = await EventCollection.findAll();
     const response = allEvents.map(util.constructEventResponse);
     res.status(200).json(response);
   },
-  [userValidator.isAuthorExists],
+  // [userValidator.isAuthorExists],
   async (req: Request, res: Response) => {
-    console.log("Looking for Events of a specific user");
+    console.log("Looking for Events of a specific user (THIS SHOULD BE EVERY TIME WE LOAD PROFILE)");
     const authorEvents = await EventCollection.findAllByUsername(
       req.query.author as string
     );
@@ -76,11 +76,21 @@ router.post(
       }
     }
     if (!taken) {
+
+      let start = req.body.start;
+      let end = req.body.end
+
+      if (req.body.start.includes("T") && req.body.end.includes("T"))
+      {
+        start = start.split("T")[0] + " " + start.split("T")[1];
+        end = end.split("T")[0] + " " + end.split("T")[1];
+      }
+
       const event = await EventCollection.addOne(
         userId,
         req.body.title,
-        req.body.start,
-        req.body.end,
+        start,
+        end,
         req.body.content
       );
 

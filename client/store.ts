@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     profileUsername: null, // current clicked on profile username (particularly helpful when clicking other users)
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     groups: [],
-    currentGroup: ""
+    currentGroup: "",
+    navBarChosen: ""
   },
   mutations: {
     alert(state, payload) {
@@ -79,6 +80,9 @@ const store = new Vuex.Store({
        * @param likes - Likes to store
        */
       state.profileUsername = username;
+    },
+    updateNavBarChosen(state, narBarChosen){
+      state.navBarChosen = narBarChosen;
     },
     async refreshFreets(state) {
       /**

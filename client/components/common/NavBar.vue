@@ -11,20 +11,20 @@
       </h1>
     </div>
     <div class="right">
-      <router-link @click.native = "discover" class = "page_link" :style= "{'font-weight': chosen == 'discover' ? 600 : 300}" to="/discover">
+      <router-link @click.native = "discover" class = "page_link" :style= "{'font-weight': $store.state.navBarChosen == 'discover' ? 600 : 300}" to="/discover">
         Discover
       </router-link>
-      <router-link @click.native = "messages" class = "page_link" :style= "{'font-weight': chosen == 'messages' ? 600 : 300}" v-if="$store.state.username" to="/messages">
+      <router-link @click.native = "messages" class = "page_link" :style= "{'font-weight': $store.state.navBarChosen == 'messages' ? 600 : 300}" v-if="$store.state.username" to="/messages">
         Messages
       </router-link>
-      <router-link @click.native ="goToProfile" class = "page_link" :style= "{'font-weight': chosen == 'profile' ? 600 : 300}"
+      <router-link @click.native ="goToProfile" class = "page_link" :style= "{'font-weight': $store.state.navBarChosen == 'profile' ? 600 : 300}"
         v-if="$store.state.username"
         to="/profile"
       >
         My Calendar
       </router-link>
       <p v-else></p>
-      <router-link @click.native = "account" class = "page_link" :style= "{'font-weight': chosen == 'account' ? 600 : 300}"
+      <router-link @click.native = "account" class = "page_link" :style= "{'font-weight': $store.state.navBarChosen == 'account' ? 600 : 300}"
         v-if="$store.state.username"
         to="/account"
       >
@@ -59,20 +59,20 @@ export default {
     };
   },
   created(){
-    this.chosen = "discover";
+    this.chosen = this.$store.state.navBarChosen;
   },
   methods: {
     async discover(){
-      this.chosen = "discover";
+      this.$store.commit('updateNavBarChosen', "discover");
     },
     async messages(){
-      this.chosen = "messages";
+      this.$store.commit('updateNavBarChosen', "messages");
     },
     async account(){
-      this.chosen = "account";
+      this.$store.commit('updateNavBarChosen', "account");
     },
     async goToProfile(){
-      this.chosen = "profile";
+      this.$store.commit('updateNavBarChosen', "profile");
       this.$store.commit('refreshProfileFreets', this.$store.state.username);
       this.$store.commit('refreshLikes', this.$store.state.userId);
       this.$store.commit('updateProfileUsername', this.$store.state.username);

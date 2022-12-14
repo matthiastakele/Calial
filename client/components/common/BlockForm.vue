@@ -3,7 +3,7 @@
 
 <template>
   <form @submit.prevent="submit">
-    <h3>{{ title }}</h3>
+    <h3 id="title">{{ title }}</h3>
     <article
       v-if="fields.length"
     >
@@ -11,7 +11,7 @@
         v-for="field in fields"
         :key="field.id"
       >
-        <label :for="field.id">{{ field.label }}:</label>
+        <label id="labels" :for="field.id">{{ field.label }}:</label>
         <textarea class="content-text" :placeholder= message
           v-if="field.id === 'content'"
           font-family = 'Arial'
@@ -27,10 +27,9 @@
           :value="field.value"
           @input="field.value = $event.target.value"
         >
-        <input
+        <input type="datetime-local"
           v-else-if = "(field.id === 'start' || field.id === 'end')"
           :placeholder = message2 
-          :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
@@ -206,6 +205,19 @@ textarea {
    font-family: inherit;
    font-size: inherit;
 }
+
+label, h3{
+  color: #FAF9F6;
+}
+
+#labels {
+  color: white;
+}
+
+#title {
+  color: white;
+}
+
 .grid-container {
   display: grid;
   margin-right: 75%;

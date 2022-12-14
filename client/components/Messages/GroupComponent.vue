@@ -93,7 +93,7 @@ export default {
     width: 90%;
     height: 100%;
     font-size:x-large;
-    background-color: rgb(62, 126, 245);
+    background-color: #1434A4;
     padding: 3px;
     border: none;
     color: white;
@@ -112,7 +112,7 @@ export default {
 }
 .selectedExitButton{
     color: black;
-    background-color: rgb(62, 126, 245);
+    background-color: #1434A4;
     border: none;
     width: 10%;
     height: 100%;

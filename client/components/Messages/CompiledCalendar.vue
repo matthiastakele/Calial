@@ -1,27 +1,19 @@
 <template>
   <main>
-    <p>{{ this.test }}</p>
     <vue-cal
-      ref="vuecal"
-      style="height: 700px"
+    ref="vuecal"
+      style="height: 600px"
       today-button
-      :disable-views="['years']"
+      :time-step="30"
+      :disable-views="['years', 'year', 'month', 'week']"
       :editable-events="{ title: true, drag: false, resize: true, delete: true, create: true }"
+      :split-days="splitDays"
+      :sticky-split-labels="stickySplitLabels"
+      :min-cell-width="minCellWidth"
+      :min-split-width="minSplitWidth"
       :drag-to-create-event="false"
       :cell-click-hold="false"
-      @cell-dblclick="
-        $refs.vuecal.createEvent($event, 60, {
-          title: 'New Event',
-          class: 'leisure',
-        })
-      "
-      :on-event-create="createEvent"
-      @event-delete="deleteEvent"
-      @event-title-change="changeTitle"
-      @event-drop="changeDrop"
-      @event-duration-change="changeDuration"
       :dblclickToNavigate="false"
-      :events="events"
     >
     </vue-cal>
   </main>
@@ -32,48 +24,37 @@ import VueCal from "vue-cal";
 export default {
   components: { VueCal },
   async created() {
+    now = new Date();
     const events =
       await `/api/events?author=${this.$store.state.profileUsername}`;
     for (event of events) {
       this.events.push({
         start: event.start,
         end: event.end,
-        titke: event.title,
+        title: event.title,
       });
     }
   },
   data: () => ({
-    a: "",
-    b: "",
-    test: "",
     selectedEvent: null,
     showEventCreationDialog: false,
     eventsCssClasses: ["leisure", "sport", "health"],
     events: [],
-    colors: [
-      "blue",
-      "indigo",
-      "deep-purple",
-      "cyan",
-      "green",
-      "orange",
-      "grey darken-1",
-    ],
-    names: [
-      "Meeting",
-      "Holiday",
-      "PTO",
-      "Travel",
-      "Event",
-      "Birthday",
-      "Conference",
-      "Party",
+    splitDays: [
+      // The id property is added automatically if none (starting from 1), but you can set a custom one.
+      // If you need to toggle the splits, you must set the id explicitly.
+      { id: 1, class: "mom", label: "Mom" },
+      { id: 2, class: "dad", label: "Dad", hide: false },
+      { id: 3, class: "kid1", label: "Kid 1" },
+      { id: 4, class: "kid2", label: "Kid 2" },
+      { id: 5, class: "kid3", label: "Kid 3" },
     ],
   }),
   methods: {
     /* onEventClick(event, e) {
       this.selectedEvent = event;
       this.showDialog = true;
+
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
       this.events = [];
@@ -135,7 +116,7 @@ export default {
       this.editEvent(newEvent, "_");
     },
     async changeDrop(event) {
-      this.test = event;
+      //this.test = event;
       const originalEvent = event.originalEvent;
       const newEvent = event.event;
       // this.deleteEvent(originalEvent, "_");
@@ -168,6 +149,7 @@ export default {
           if (!r.ok) {
             throw new Error(res.error);
           }
+
           // res contains a list of the events for that username
           for (const event of res) {
             // const timeDiff = 500;
@@ -180,6 +162,7 @@ export default {
               // Custom event props (optional).
               { title: event.title, content: event.content, class: "leisure" }
             );
+
             // const timeDiff = this.calculateTimeDiff(event.start, event.end);
             // this.$refs.vuecal.createEvent(event.start, timeDiff, {
             // title: event.title,
@@ -196,113 +179,10 @@ export default {
 </script>
 
 <style>
-.vuecal__menu, .vuecal__cell-events-count {
-  background-color: rgb(153, 153, 255) !important;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-}
-.vuecal__title-bar {
-  background-color: #caccff !important;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-}
-.vuecal__cell-date { font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif; }
-.vuecal__cell--today, .vuecal__cell--current {
-  background-color: rgba(240, 240, 255, 0.4) !important;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-}
-.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { background-color: rgba(235, 255, 245, 0.4) !important; }
-.vuecal__cell--selected:before { border-color: rgba(66, 185, 131, 0.5) !important; }
-/* Cells and buttons get highlighted when an event is dragged over it. */
-.vuecal__cell--highlighted:not(.vuecal__cell--has-splits), .vuecal__cell-split--highlighted { background-color: rgba(195, 255, 225, 0.5) !important; }
-.vuecal__arrow.vuecal__arrow--highlighted, .vuecal__view-btn.vuecal__view-btn--highlighted { background-color: rgba(136, 236, 191, 0.25) !important; }
-.vuecal__event {
-  cursor: pointer;
-  height: 100px;
-}
-.vuecal__event-title {
-  font-size: 15px;
-  font-weight: bold;
-  font-family: Arial;
-}
-.vuecal--view-with-time .vuecal__weekdays-headings, .vuecal--view-with-time .vuecal__all-day {
-    padding-right: 17px;
-    background-color: rgb(255, 255, 255) !important;
-}
-.vuecal__heading .weekday-label {
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-  display: flex;
-  font-size: 70%;
-  font-weight: bold;
-  justify-content: center;
-  align-items: center;
-}
-.vuecal__time-column .vuecal__time-cell {
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-  color: rgb(90, 90, 90) !important;
-  text-align: center !important;
-  font-size: 70% !important;
-}
-.vuecal__no-event {
-  /* padding-top: 1em; */
-  color: rgb(148, 148, 148) !important;
-  justify-self: flex-start;
-  margin-bottom: auto;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-  font-size: 70%;
-}
-.vuecal__event-time {
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-  font-size: 85%;
-  display: inline-block;
-  margin-bottom: 3px;
-  padding-bottom: 3px;
-}
-.vuecal__event-title {
-  padding-top: 6px;
-  font-size: 15px;
-  font-weight: bold;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-}
-.vuecal__event-content {
-  font-style: italic;
-  font-size: 15px;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-}
-.vuecal__event.leisure {
-  background-color: rgba(253, 156, 66, 0.9) !important;
-  border: 1px solid rgb(233, 136, 46) !important;
-  color: #fff !important;
-}
-.vuecal__event.sport {
-  background-color: rgba(255, 102, 102, 0.9) !important;
-  border: 1px solid rgb(235, 82, 82) !important;
-  color: #fff !important;
-}
-.vuecal__event-delete {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 1.4em;
-  line-height: 1.4em;
-  background-color: #dd3333d9 !important;
-  color: #fff !important;
-  cursor: pointer;
-  transition: 0.3s;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
-  font-size: 85%;
-}
+.vuecal__cell-split.dad {background-color: rgba(221, 238, 255, 0.5);}
+.vuecal__cell-split.mom {background-color: rgba(255, 232, 251, 0.5);}
+.vuecal__cell-split.kid1 {background-color: rgba(221, 255, 239, 0.5);}
+.vuecal__cell-split.kid2 {background-color: rgba(255, 250, 196, 0.5);}
+.vuecal__cell-split.kid3 {background-color: rgba(255, 206, 178, 0.5);}
+.vuecal__cell-split .split-label {color: rgba(0, 0, 0, 0.1);font-size: 26px;}
 </style>

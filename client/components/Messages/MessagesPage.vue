@@ -10,15 +10,15 @@
       <div
         class="groupOptions">
 
-        <div
+        <div style="margin-bottom: 20px;"
           v-if="createPromptButton===true">
           <button
-            class="createGroupButton"
+            class="createGroupButton pretty_button"
             @click="createPromptButton=false">
             Create a new Group
           </button>
         </div>
-        <div
+        <div style="margin-bottom: 20px;"
           v-else>
           <CreateGroupForm/>
           <button
@@ -27,10 +27,10 @@
           </button>
         </div>
 
-        <div
+        <div 
           v-if="joinPromptButton===true">
           <button
-            class="joinGroupButton"
+            class="joinGroupButton pretty_button"
             @click="joinPromptButton=false">
             Join a new Group
           </button>
@@ -47,7 +47,7 @@
 
 
       <div 
-        class="leftMargin">
+        class="leftMargin groupOptions" style="padding: 0.5rem;">
         <h3>Your Groups</h3>
       </div>
       <!-- {{$store.state.groups}} -->
@@ -80,7 +80,7 @@
       <h3>Chat with {{$store.state.currentGroup}}</h3>
       <h5>Your Displayed Name: {{username}}</h5>
       <section v-if="joinedRoom.length === 0">
-          <button
+          <button class = "pretty_button"
             :key = $store.state.currentGroup
             @click="joinRoom($store.state.currentGroup)">
             Join the Live Chat for: {{$store.state.currentGroup}}
@@ -94,13 +94,13 @@
       </section> -->
 
       <section v-else>
-          <h2>{{ joinedRoom }}</h2>
+          <h2 style="color: #FAF9F6;">{{ joinedRoom }}</h2>
           <input
               type="text"
               name="message"
               v-model="text"
           />
-          <button
+          <button class = "pretty_button"
               @click="sendMessage"
           >
               Send chat
@@ -111,7 +111,7 @@
               </b>
               : {{ message.text }}
           </div>
-          <button @click="leaveRoom">
+          <button class = "pretty_button" @click="leaveRoom">
               Leave this room
           </button>
       </section>
@@ -119,8 +119,13 @@
     </div>
 
     <div class="two">
-      <h3>Propose an Event</h3>
-      <CreateEventForm/>
+      <div v-if="suggestEventButton==true">
+        <button class = "createEventButton pretty_button" @click="suggestEventButton=false">Suggest an Event</button>
+      </div>
+      <div class="eventForm" v-else>
+        <CreateEventForm style="border: none;"/>
+        <button class = "cancelEvent" @click="suggestEventButton=true">Cancel</button>
+      </div>
       <div>
         <div class="suggestedEventTitle">
           <h3>Suggested Events</h3>
@@ -184,6 +189,7 @@ export default {
       currentGroup: "current",
       createPromptButton: true,
       joinPromptButton: true,
+      suggestEventButton: true
     };
   },
   created() {
@@ -269,6 +275,10 @@ export default {
 </script>
 
 <style scoped>
+@import "/components/global_css.css";
+h3, h4, h5{
+  color: #FAF9F6;
+}
 .suggestedEventTitle{
   text-align: left;
   margin: 0;
@@ -284,15 +294,15 @@ export default {
   border: 1px solid  black;
 }
 .groupOptions{
-  /* border-radius: 25px;
-  border: 1px solid #111;  */
+  /* border-radius: 25px; */
+  border: 1px solid #111; 
   padding: 1rem;
   /* display: flex; */
   /* justify-content: space-evenly; */
-  margin-bottom: 14px;
+  /* margin-bottom: 14px; */
   /* position: relative; */
   /* margin-top: 25px; */
-  background-color: rgb(226, 224, 224);
+  background-color: rgb(34, 37, 88);
 }
 .groupsPane
 {  
@@ -310,7 +320,7 @@ export default {
   /* background-color:orange; */
   float: left;
   width:30%;
-  background-color: lightgrey;
+  background-color: rgb(34, 37, 88);
   border: 1px solid black;
   text-align: center;
   padding: 0;
@@ -323,7 +333,7 @@ export default {
 }
 .three
 {
-    background-color: lightgrey;
+    background-color: rgb(34, 37, 88);
     border: 1px solid #111;
     float: left;
     width:50%;
@@ -345,6 +355,8 @@ export default {
   margin: 5px;
   gap: 10px;
   list-style: none;
+  height: 500px;
+  overflow:auto;
 }
 .createGroupForm{
   background-color: aqua;
@@ -353,22 +365,38 @@ export default {
 .exitGroupOptions{
   height: 30px;
   width: 100%;
-  background-color: white;
+  background-color: transparent;
   color: red;
-  border-top: none;
+  border: none;
+  font-size: 15px;
+  /* border-top: none;
   border-left: 2px solid #111; 
   border-bottom: 2px solid #111; 
-  border-right: 2px solid #111;
+  border-right: 2px solid #111; */
+}
+
+.cancelEvent{
+  color: red;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
 }
 .createGroupButton{
-  background-color: blue;
+  background-color: #50C878;
   color: white;
   width: 100%;
   height: 50px;
   margin-bottom: 10px;
 }
 .joinGroupButton{
-  background-color: purple;
+  background-color: #5D3FD3;
+  color: white;
+  width: 100%;
+  height: 50px;
+}
+
+.createEventButton{
+  background-color: rgb(62, 126, 245);
   color: white;
   width: 100%;
   height: 50px;
@@ -378,4 +406,14 @@ export default {
   /* background-color: bisque; */
 }
 
+.eventForm {
+  border-radius: 25px;
+  border: 2px solid #111;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+}
 </style>

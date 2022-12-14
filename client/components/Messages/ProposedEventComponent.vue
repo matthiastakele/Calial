@@ -1,14 +1,12 @@
 <template>
-    <button
-        v-if="groupName.content.length"
+    <div
         class="proposedEventButton">
-        <b>{{groupName.title}}</b> @{{groupName.author}}<br> From: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.start}} </mark><br>To: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.end}} </mark><br> Description: {{groupName.content}}
-    </button>
-    <button
-        v-else
-        class="proposedEventButton">
-        <b>{{groupName.title}}</b> @{{groupName.author}}<br> From: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.start}} </mark><br>To: <mark style="color:rgb(62, 126, 245);background-color: white;"> {{groupName.end}} </mark><br> Description: N/A
-    </button>
+        <h3>{{groupName.title}} @{{groupName.author}}</h3>
+        <h4>From: {{groupName.start.split(" ")[1]}} {{groupName.start.split(" ")[0].split("-")[1]}}/{{groupName.start.split(" ")[0].split("-")[2]}}/{{groupName.start.split(" ")[0].split("-")[0]}}</h4>
+        <h4>To: {{groupName.end.split(" ")[1]}} {{groupName.end.split(" ")[0].split("-")[1]}}/{{groupName.end.split(" ")[0].split("-")[2]}}/{{groupName.end.split(" ")[0].split("-")[0]}}</h4>
+        <h4 v-if="groupName.content.length > 0">Location: {{groupName.content}}</h4>
+        <button class="pretty_button">Add to Calendar</button>
+    </div>
   </template>
 
 
@@ -51,6 +49,7 @@ export default {
 </script>
 
 <style scoped>
+@import "/components/global_css.css";
 .group {
     /* margin: 10px; */
     /* display: flex;
@@ -84,14 +83,20 @@ export default {
     /* background-color: white; */
 }
 .proposedEventButton{
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: auto;
     /* font-size:x-large; */
     background-color: white;
     /* border: 1px solid black;  */
     border-radius: 5px;
+<<<<<<< HEAD
     padding: 20px;
     text-align: left;
+=======
+    padding: 3px;
+    font-size: 1rem;
+    text-align: center;
+>>>>>>> fa30e0ea209c1fb1763d83f32dbcd657af469c7f
 }
 .exitButton{
     color: red;

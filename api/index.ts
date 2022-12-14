@@ -1,4 +1,6 @@
 // This file must be in the /api folder for Vercel to detect it as a serverless function
+// Add this line at the top
+import path from "path";
 import type {Request, Response} from 'express';
 import express from 'express';
 import session from 'express-session';
@@ -82,12 +84,20 @@ app.use('/api/follows', followRouter);
 app.use('/api/circles', circleRouter);
 app.use('/api/events', eventRouter);
 
-// Catch all the other routes and display error message
-app.all('*', (req: Request, res: Response) => {
-  res.status(404).json({
-    error: 'Page not found'
-  });
+// Add the following lines
+const isProduction = process.env.NODE_ENV === 'production';
+const vuePath = path.resolve(__dirname, "..", "client", isProduction ? "dist" : "public");
+app.use(express.static(vuePath));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(vuePath, "index.html"));
 });
+
+// // Catch all the other routes and display error message
+// app.all('*', (req: Request, res: Response) => {
+//   res.status(404).json({
+//     error: 'Page not found'
+//   });
+// });
 
 // Create server to listen to request at specified port
 const server = http.createServer(app);
