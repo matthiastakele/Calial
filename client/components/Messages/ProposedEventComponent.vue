@@ -89,14 +89,9 @@ export default {
     background-color: white;
     /* border: 1px solid black;  */
     border-radius: 5px;
-<<<<<<< HEAD
-    padding: 20px;
-    text-align: left;
-=======
     padding: 3px;
     font-size: 1rem;
     text-align: center;
->>>>>>> fa30e0ea209c1fb1763d83f32dbcd657af469c7f
 }
 .exitButton{
     color: red;
