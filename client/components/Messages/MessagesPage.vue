@@ -77,21 +77,15 @@
     </div>
 
     <div class="three"> 
-      <h3>Chat with {{$store.state.currentGroup}}</h3>
+      <h3>Chat with {{$store.state.currentGroup}}, {{this.rooms}}, </h3>
       <h5>Your Displayed Name: {{username}}</h5>
       <section v-if="joinedRoom.length === 0">
           <button class = "pretty_button"
             :key = $store.state.currentGroup
-            @click="joinRoom($store.state.currentGroup)">
+            @click="addRoom($store.state.currentGroup); joinRoom($store.state.currentGroup)">
             Join the Live Chat for: {{$store.state.currentGroup}}
           </button>
       </section>
-
-      <!-- <section v-if="joinedRoom.length === 0">
-          <div v-for="room in rooms" :key="room" @click="joinRoom(room)">
-              {{ room }}
-          </div>
-      </section> -->
 
       <section v-else>
           <h2 style="color: #FAF9F6;">{{ joinedRoom }}</h2>
@@ -184,7 +178,7 @@ export default {
       username: this.$store.state.username,
       text: "",
       messages: [],
-      rooms: ["Room1", "Room2"],
+      rooms: ["test", "Room2", "Room3"],
       joinedRoom: "",
       currentGroup: "current",
       createPromptButton: true,
@@ -233,7 +227,7 @@ export default {
             text: this.text,
             username: this.username,
             userId: this.socketInstance.id,
-            roomName: this.joinedRoom,
+            roomName: "Room3",
         };
         this.messages = this.messages.concat(message); // show message in my client
         this.socketInstance.emit('message', message); // send message to others
@@ -269,6 +263,9 @@ export default {
             roomName: this.joinedRoom,
         });
         this.joinedRoom = "";
+    },
+    addRoom(room){
+      this.rooms.concat(room);
     }
   },
 };
