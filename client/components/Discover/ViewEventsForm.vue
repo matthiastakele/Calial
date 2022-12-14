@@ -5,7 +5,7 @@ import InlineForm from '@/components/common/InlineForm.vue';
 
 export default {
   name: 'ViewEventsForm',
-  //mixins: [InlineForm], #SUsPECT
+  //mixins: [InlineForm], 
   data() {
     return {value: this.$store.state.filter, username: this.$store.state.username};
   },

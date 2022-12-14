@@ -97,6 +97,7 @@
 
 
         <button class = "pretty_button"
+        @click = "addEventtoCalendar"
         >
         📅 Add Event to Calendar
         </button>
@@ -149,6 +150,7 @@
 <script>
 import LikeComponent from '@/components/Like/LikeComponent.vue'
 import FollowComponent from '@/components/Follow/FollowComponent.vue'
+//import Calendar from '@/components/Profile/Calendar.vue'
 export default {
   name: 'EventComponent',
   props: {
@@ -225,6 +227,18 @@ export default {
       };
       this.request(params);
     },
+    addEventtoCalendar() {
+      const params = {
+        method: 'POST',
+        message: 'Successfully added event!',
+        body: JSON.stringify({title: this.event.title, start: this.event.start, end: this.event.end, content: this.event.content}),
+        callback: () => {
+          this.$set(this.alerts, params.message, 'success');
+          setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+        }
+      };
+      this.request2(params);
+    },
     async request(params) {
       /**
        * Submits a request to the freet's endpoint
@@ -273,6 +287,27 @@ export default {
     //   this.authorId = res.userId;
     //   this.$store.commit('refreshLikes', this.authorId);
     // }
+    async request2(params) {
+      const options = {
+        method: params.method, headers: {'Content-Type': 'application/json'}
+      };
+      if (params.body) {
+        options.body = params.body;
+      }
+      try {
+        const r = await fetch(`/api/events`, options);
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+        }
+
+        this.$store.commit('refreshEvents');
+        params.callback();
+      } catch (e) {
+        this.$set(this.alerts, e, 'error');
+        setTimeout(() => this.$delete(this.alerts, e), 3000);
+      }
+    },
   }
 };
 </script>
