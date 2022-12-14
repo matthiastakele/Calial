@@ -173,7 +173,8 @@ router.delete(
 router.get(
   '/users/name/:circleName?',
   [
-    userValidator.isUserLoggedIn
+    userValidator.isUserLoggedIn,
+    circleValidator.doesParamsCircleExist
   ],
   async (req: Request, res: Response) => {
     //const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn

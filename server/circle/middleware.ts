@@ -2,6 +2,7 @@ import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import UserCollection from '../user/collection';
 import CircleCollection from '../circle/collection';
+import CircleModel from '../circle/model';
 
 /**
  * Checks if a username in req.body exists
@@ -43,7 +44,21 @@ const doesCircleNameExist = async (req: Request, res: Response, next: NextFuncti
     });
 };
 
+const doesParamsCircleExist = async (req: Request, res: Response, next: NextFunction) => {
+  const circle = await CircleCollection.findByName(req.params.circleName);
+  if(circle != null){
+      next();
+      return;
+  }
+  res.status(409).json({
+  error: {
+          cirleName: 'circle does not exist'
+      }
+  });
+};
+
 export {
     doesUsernameExist,
-    doesCircleNameExist
+    doesCircleNameExist,
+    doesParamsCircleExist
 };
