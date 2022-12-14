@@ -78,6 +78,7 @@ export default {
       e.stopPropagation();
       this.events = [];
     } */
+    // might try to make something that automatically scrolls to a certain time
     async createEvent(event, deleteEventFunction) {
       const start = this.convertDate(event.start);
       const end = this.convertDate(event.end);
