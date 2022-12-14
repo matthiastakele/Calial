@@ -51,6 +51,10 @@ h1, h2, h3, h4, h5, p, label{
   color: #353535;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+
+b, div{
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
   
 textarea {
   width: 100%;

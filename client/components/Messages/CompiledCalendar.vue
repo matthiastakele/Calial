@@ -2,7 +2,7 @@
   <main>
     <vue-cal
     ref="vuecal"
-      style="height: 600px; width: 400px; margin-top:20px;"
+      style="height: 600px; width: 550px; margin-top:20px;"
       today-button
       :time-step="30"
       :disable-views="['years', 'year', 'month', 'week']"
