@@ -13,7 +13,7 @@
     >
       <div id="events">
         <EventComponent 
-          v-for="event in $store.state.events.reverse()"
+          v-for="event in $store.state.events"
             :key="event.id"
             :event="event"
         />
