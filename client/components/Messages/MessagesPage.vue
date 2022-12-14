@@ -115,7 +115,9 @@
               Leave this room
           </button>
       </section>
-
+      <div v-if="showCompiledCalendarButton==false">
+        <CompiledCalendar/>
+      </div>
     </div>
 
     <div class="two">
@@ -125,6 +127,12 @@
       <div class="eventForm" v-else>
         <CreateEventForm style="border: none;"/>
         <button class = "cancelEvent" @click="suggestEventButton=true">Cancel</button>
+      </div>
+      <div v-if="showCompiledCalendarButton==true">
+        <button class = "createEventButton pretty_button" @click="showCompiledCalendarButton=false">Show Compiled Calendar</button>
+      </div>
+      <div v-else>
+        <button class = "createEventButton pretty_button" @click="showCompiledCalendarButton=true">Close Compiled Calendar</button>
       </div>
       <div>
         <div class="suggestedEventTitle">
@@ -147,6 +155,7 @@
 
 <script>
 import Calendar from '@/components/Profile/Calendar.vue';
+import CompiledCalendar from '@/components/Messages/CompiledCalendar.vue';
 import CreateGroupForm from '@/components/Messages/CreateGroupForm.vue';
 import JoinGroupForm from '@/components/Messages/JoinGroupForm.vue';
 import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
@@ -157,8 +166,6 @@ import ProposedEventComponent from '@/components/Messages/ProposedEventComponent
 import io from "socket.io-client";
 export default {
   name: 'MessagesPage',
-  components: { Calendar
-  },
   mounted() {
     this.$refs.personalCalendar.addEventsForUser([this.$store.state.username]);
   },
@@ -167,6 +174,7 @@ export default {
   },
   components: { 
     Calendar,
+    CompiledCalendar,
     ChangeUsernameForm, 
     CreateGroupForm,
     JoinGroupForm,
@@ -189,7 +197,8 @@ export default {
       currentGroup: "current",
       createPromptButton: true,
       joinPromptButton: true,
-      suggestEventButton: true
+      suggestEventButton: true,
+      showCompiledCalendarButton: true
     };
   },
   created() {
@@ -400,6 +409,7 @@ h3, h4, h5{
   color: white;
   width: 100%;
   height: 50px;
+  margin-bottom: 5px;
 }
 .leftMargin{
   padding-left: 20px;

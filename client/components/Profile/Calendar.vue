@@ -1,7 +1,7 @@
 <template>
   <main>
     <p>{{ this.test }}</p>
-    <vue-cal
+    <vue-cal class = "below"
       ref="vuecal"
       style="height: 700px"
       today-button
@@ -208,18 +208,19 @@ export default {
     Arial, sans-serif;
   border: 1px solid #111; 
 }
-.vuecal__cell{background-color: #FAF9F6 !important;}
+.vuecal__cell{}
 .vuecal__cell-date { font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .vuecal__cell--today, .vuecal__cell--current {
-  background-color: #d1dffa !important;
+  background-color: #d1dffa80 !important;
   font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
     Arial, sans-serif;
 }
-.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { color: #FAF9F6; background-color: #a4c0f4 !important; }
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected { background-color: #a4c0f44D !important; }
 .vuecal__cell--selected:before {  }
 /* Cells and buttons get highlighted when an event is dragged over it. */
 .vuecal__cell--highlighted:not(.vuecal__cell--has-splits), .vuecal__cell-split--highlighted { background-color: rgba(195, 255, 225, 0.5) !important; }
 .vuecal__arrow.vuecal__arrow--highlighted, .vuecal__view-btn.vuecal__view-btn--highlighted { background-color: rgba(136, 236, 191, 0.25) !important; }
+.vuecal__time-cell-line {border-color: #42b983;}
 .vuecal__event {
   cursor: pointer;
   height: 100px;
@@ -283,8 +284,8 @@ export default {
     Arial, sans-serif;
 }
 .vuecal__event.leisure {
-  background-color: rgba(253, 156, 66, 0.9) !important;
-  border: 1px solid rgb(233, 136, 46) !important;
+  background-color: rgb(62, 126, 245) !important;
+  border: 1px solid rgb(62, 126, 245) !important;
   color: #fff !important;
 }
 .vuecal__event.sport {

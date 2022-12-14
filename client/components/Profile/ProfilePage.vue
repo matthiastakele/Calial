@@ -163,7 +163,7 @@ section .scrollbox {
   font-size: 1em;
 }
 span.profilePic{
-  background: rgb(153, 153, 255);
+  background: rgb(62, 126, 245);
   border-radius: 50%;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
