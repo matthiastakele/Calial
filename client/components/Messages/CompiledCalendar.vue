@@ -1,19 +1,19 @@
 <template>
   <main>
+    <p>{{this.test}}</p>
     <vue-cal
-    ref="vuecal"
-      style="height: 600px; width: 550px; margin-top:20px;"
-      today-button
-      :time-step="30"
-      :disable-views="['years', 'year', 'month', 'week']"
-      :editable-events="{ title: true, drag: false, resize: true, delete: true, create: true }"
-      :split-days="splitDays"
-      :sticky-split-labels="stickySplitLabels"
-      :min-cell-width="minCellWidth"
-      :min-split-width="minSplitWidth"
-      :drag-to-create-event="false"
-      :cell-click-hold="false"
-      :dblclickToNavigate="false"
+    style="height: 600px; width: 550px; margin-top:20px;"
+    today-button
+    selected-date="2022-12-12"
+    :time-from="8 * 60"
+    :time-step="30"
+    :disable-views="['years', 'year', 'month']"
+    editable-events
+    :events="events"
+    :split-days="splitDays"
+    :sticky-split-labels="stickySplitLabels"
+    :min-cell-width="minCellWidth"
+    :min-split-width="minSplitWidth"
     >
     </vue-cal>
   </main>
@@ -24,31 +24,79 @@ import VueCal from "vue-cal";
 export default {
   components: { VueCal },
   async created() {
-    now = new Date();
-    const events =
-      await `/api/events?author=${this.$store.state.profileUsername}`;
-    for (event of events) {
-      this.events.push({
-        start: event.start,
-        end: event.end,
-        title: event.title,
-      });
-    }
+    // style="height: 600px; width: 550px; margin-top:20px;"
+    //   today-button
+    //   :time-step="30"
+    //   :disable-views="['years', 'year', 'month', 'week']"
+    //   :editable-events="{ title: true, drag: false, resize: true, delete: true, create: true }"
+    //   :split-days="splitDays"
+    //   :sticky-split-labels="stickySplitLabels"
+    //   :min-cell-width="minCellWidth"
+    //   :min-split-width="minSplitWidth"
+    //   :drag-to-create-event="false"
+    //   :cell-click-hold="false"
+    //   :dblclickToNavigate="false"
+    // now = new Date();
+    // const events =
+    //   await `/api/events?author=${this.$store.state.profileUsername}`;
+    // for (event of events) {
+    //   this.events.push({
+    //     start: event.start,
+    //     end: event.end,
+    //     title: event.title,
+    //   });
+    // }
+    //this.test = this.$store.state.currentGroupMembers;
+    // for(const member of this.$store.state.currentGroupMembers){
+    //   this.splitDays[i].label = member;
+    // }
   },
   data: () => ({
-    selectedEvent: null,
-    showEventCreationDialog: false,
-    eventsCssClasses: ["leisure", "sport", "health"],
-    events: [],
-    splitDays: [
-      // The id property is added automatically if none (starting from 1), but you can set a custom one.
-      // If you need to toggle the splits, you must set the id explicitly.
-      { id: 1, class: "mom", label: "Mom" },
-      { id: 2, class: "dad", label: "Dad", hide: false },
-      { id: 3, class: "kid1", label: "Kid 1" },
-      { id: 4, class: "kid2", label: "Kid 2" },
-      { id: 5, class: "kid3", label: "Kid 3" },
-    ],
+  stickySplitLabels: false,
+  minCellWidth: 400,
+  minSplitWidth: 0,
+  splitDays: [
+    // The id property is added automatically if none (starting from 1), but you can set a custom one.
+    // If you need to toggle the splits, you must set the id explicitly.
+    { id: 1, class: 'mom', label: 'Matthias' },
+    { id: 2, class: 'dad', label: 'Steve', hide: false },
+    { id: 3, class: 'kid1', label: 'Samuel' },
+    { id: 4, class: 'kid2', label: 'Bryan' },
+  ],
+  events: [
+    {
+      start: '2022-12-12 11:00',
+      end: '2022-12-12 12:00',
+      title: 'Exercise',
+      content: '',
+      class: 'sport',
+      split: 1 // Has to match the id of the split you have set (or integers if none).
+    },
+    {
+      start: '2022-12-12 9:30',
+      end: '2022-12-12 10:30',
+      title: 'Dinner',
+      content: '',
+      class: 'leisure',
+      split: 2
+    },
+    {
+      start: '2022-12-12 8:30',
+      end: '2022-12-12 9:45',
+      title: 'Private',
+      content: '',
+      class: 'sport',
+      split: 3
+    },
+    {
+      start: '2022-12-12 9:00',
+      end: '2022-12-12 10:00',
+      title: 'Shopping',
+      content: '',
+      class: 'leisure',
+      split: 4
+    }
+  ]
   }),
   methods: {
     /* onEventClick(event, e) {
@@ -184,5 +232,4 @@ export default {
 .vuecal__cell-split.kid1 {background-color: rgba(221, 255, 239, 0.7);}
 .vuecal__cell-split.kid2 {background-color: rgba(255, 250, 196, 0.7);}
 .vuecal__cell-split.kid3 {background-color: rgba(255, 206, 178, 0.7);}
-.vuecal__cell-split .split-label {color: rgba(0, 0, 0, 0.1);font-size: 26px;}
 </style>

@@ -21,6 +21,7 @@ const store = new Vuex.Store({
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     groups: [],
     currentGroup: "",
+    currentGroupMembers: [],
     navBarChosen: ""
   },
   mutations: {
@@ -102,14 +103,14 @@ const store = new Vuex.Store({
     },
     async refreshGroups(state) {
       /**
-       * Request the server for the currently available freets.
+       * Request the server for the currently available groups
        */
       const url = `/api/circles`;
       const res = await fetch(url).then(async r => r.json());
       Vue.set(state, 'groups', []);
       for (let i = 0; i < res.length; i++) {
         // state.groups.push(res[i])
-        state.groups.push(res[i].name);
+        state.groups.push(res[i]);
       }
     },
     async refreshProfileFreets(state) {
@@ -131,8 +132,17 @@ const store = new Vuex.Store({
         return freetIds.includes(freet._id);
       });
     },
-    selectGroup(state, group){
-      Vue.set(state, 'currentGroup', group);
+    async selectGroup(state, group){
+      Vue.set(state, 'currentGroup', group.name);
+      state.currentGroupMembers = [];
+      for (let i = 0; i < group.users.length; i++) {
+        let userId = group.users[i];
+        const url = `/api/users/usernames/${userId}`;
+        const res = await fetch(url).then(async r => r.json());
+        state.currentGroupMembers.push(res.userId);
+      }
+      let temp = new Set(state.currentGroupMembers);
+      state.currentGroupMembers = Array.from(temp);
     },
     async refreshGroupEvents(state){
       const eventsUrl = `/api/events`;

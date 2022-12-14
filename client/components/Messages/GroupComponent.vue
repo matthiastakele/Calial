@@ -3,19 +3,19 @@
       class="group"
     >
     <button 
-        v-if="groupName === $store.state.currentGroup"
+        v-if="group.name === $store.state.currentGroup"
         class="selectedGroupButton"
-        @click="selectGroup(groupName)">
-        {{groupName}}
+        @click="selectGroup(group)">
+        {{group.name}}
     </button>
     <button 
         v-else
         class="groupButton"
-        @click="selectGroup(groupName)">
-        {{groupName}}
+        @click="selectGroup(group)">
+        {{group.name}}
     </button>
     <button class="selectedExitButton"
-        v-if="groupName === $store.state.currentGroup"
+        v-if="group.name === $store.state.currentGroup"
         @click="exitGroup">
         X
     </button>
@@ -32,7 +32,7 @@
 <script>
 export default {
     name: 'GroupComponent',
-    props: ['groupName'],
+    props: ['group'],
     data() {
       return {
         editing: false, // Whether or not this freet is in edit mode
@@ -54,7 +54,7 @@ export default {
                 headers: { "Content-Type": "application/json" }
             };
             // let r = await fetch(`/api/circles/${username}/self`, options);
-            let r = await fetch(`/api/circles/${this.$props.groupName}/self`, options);
+            let r = await fetch(`/api/circles/${this.$props.group.name}/self`, options);
             let res = await r.json();    
             this.$store.commit('refreshGroups');
             this.$store.commit('refreshGroupEvents');
@@ -63,6 +63,7 @@ export default {
             this.$store.commit('selectGroup', group);
             this.$store.commit('refreshGroups');
             this.$store.commit('refreshGroupEvents');
+            
         },
 
     },

@@ -42,6 +42,20 @@ router.get(
   }
 );
 
+// Get userId from username
+router.get(
+  '/usernames/:userId?',
+  [],
+  async (req: Request, res: Response) => {
+    console.log("This gets called every time we upload an event");
+    const user = await UserCollection.findOneByUserId(req.params.userId);
+    const userId = user.username;
+    res.status(200).json({
+      userId
+    });
+  }
+);
+
 /**
  * Sign in user.
  *

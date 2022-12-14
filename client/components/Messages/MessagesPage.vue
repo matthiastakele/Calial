@@ -6,6 +6,7 @@
     <!-- <div class = "compiledCalendar">
       <Calendar ref="personalCalendar" />
     </div> -->
+    <p>{{this.$store.state.currentGroupMembers}}</p>
     <div class="groupsPane">
       <div
         class="groupOptions">
@@ -54,7 +55,7 @@
       <div>
         <GroupComponent
           v-for="group in $store.state.groups"
-          :groupName=group
+          :group=group
         />
       </div>
       <!-- <section
@@ -134,7 +135,7 @@
           <h5>from others in {{$store.state.currentGroup}}</h5>
         </div>
         <div class="proposedEvents">
-          <ProposedEventComponent
+          <ProposedEventComponent style = "margin: 0 auto;"
             v-for="group in $store.state.groupEvents"
             :groupName=group
           />
@@ -160,6 +161,15 @@ import ProposedEventComponent from '@/components/Messages/ProposedEventComponent
 import io from "socket.io-client";
 export default {
   name: 'MessagesPage',
+  created(){
+    this.test = "hello";
+    // for (let i = 0; i < test.users.length; i++) {
+    //     let userId = group.users[i];
+    //     const url = `/api/users/usernames/${userId}`;
+    //     const res = await fetch(url).then(async r => r.json());
+    //     this.test = res;
+    // }
+  },
   mounted() {
     this.$refs.personalCalendar.addEventsForUser([this.$store.state.username]);
   },
@@ -192,7 +202,9 @@ export default {
       createPromptButton: true,
       joinPromptButton: true,
       suggestEventButton: true,
-      showCompiledCalendarButton: true
+      showCompiledCalendarButton: true,
+      groupsAndMembers: {},
+      test: this.$store.state.groups[0]
     };
   },
   created() {
@@ -351,12 +363,9 @@ b, h3, h4, h5{
 .proposedEvents {
   text-align: left;
   display: flex;
-  
   flex-flow: row wrap;
-  
   justify-content: space-evenly;
   align-content: space-between;
-  
   padding: 0;
   margin: 5px;
   gap: 10px;

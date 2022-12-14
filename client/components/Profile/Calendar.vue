@@ -4,6 +4,7 @@
     <vue-cal class = "below"
       ref="vuecal"
       style="height: 700px"
+      twelveHour
       today-button
       :disable-views="['years']"
       :editable-events="{ title: true, drag: false, resize: true, delete: true, create: true }"
