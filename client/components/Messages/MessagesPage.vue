@@ -82,7 +82,7 @@
       <section v-if="joinedRoom.length === 0">
           <button class = "pretty_button"
             :key = $store.state.currentGroup
-            @click="addRoom($store.state.currentGroup); joinRoom($store.state.currentGroup)">
+            @click="addRoom($store.state.currentGroup)">
             Join the Live Chat for: {{$store.state.currentGroup}}
           </button>
       </section>
